@@ -12,9 +12,9 @@
   import Arithmetic from './components/Arithmetic.vue';
   import Api from '@/lib/api';
 
-  console.log(Api);
+  // console.log(Api);
   const myApi = Api;
-  myApi.getForecast();
+  myApi.getCurrentForecast(46.954559326171875, 7.420684814453125);
   export default {
     name: 'App',
 

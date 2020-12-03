@@ -1,30 +1,21 @@
-import Store from './store.js';
+import Store from '@/store';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
 const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
 
+//Bern 46.954559326171875,7.420684814453125
 const API_URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
-const API_URL_CURRENT =
-  'https://api.srgssr.ch/forecasts/v1.0/weather/current?latitude=46.954559326171875&longitude=7.420684814453125';
-// const API_URL_7_DAYS =
-//   'https://api.srgssr.ch/forecasts/v1.0/weather/7day?latitude=46.954559326171875&longitude=7.420684814453125';
-// const API_URL_24_HOURS =
-//   'https://api.srgssr.ch/forecasts/v1.0/weather/24hour?latitude=46.954559326171875&longitude=7.420684814453125';
+const API_URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current';
+// const API_URL_7_DAYS = 'https://api.srgssr.ch/forecasts/v1.0/weather/7day';
+// const API_URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
 // const API_URL_THIS_HOUR =
-//   'https://api.srgssr.ch/forecasts/v1.0/weather/nexthour?latitude=46.954559326171875&longitude=7.420684814453125';
+//   'https://api.srgssr.ch/forecasts/v1.0/weather/nexthour';
 // const API_URL_SEARCH_LOCATION =
-//   'https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText=bern&type=locations&origins=zipcode,gg25,district,gazetteer';
+//   'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&origins=zipcode,gg25,district,gazetteer&searchText=bern';
 
-// class AccesToken {
-//   constructor(token, issuedAt, expiresIn) {
-//     this.token = token;
-//     this.issuedAt = issuedAt;
-//     this.expiresIn = expiresIn;
-//   }
-// }
 //lets try a singleton in javascript
 class Api {
   constructor() {
@@ -36,15 +27,38 @@ class Api {
     return Api.instance;
   }
 
-  async getForecast() {
+  async getCurrentForecast(latitude, longitude) {
     //if authToken undefined, then ask first for token
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
-    fetch(API_URL_CURRENT)
+    const url = API_URL_CURRENT + Api._latLongQuery(latitude, longitude);
+    const result = this._fetchForecast(url);
+    if (result) {
+      console.log(result);
+    }
+
+    return result;
+  }
+
+  async _fetchForecast(url) {
+    const result = await fetch(url, {
+      headers: {
+        Authorization: 'Bearer ' + this.authToken,
+      },
+    })
       .then((response) => response.json())
-      .then((result) => console.log(result))
       .catch((error) => console.log(error));
+
+    if (result) {
+      console.log(result);
+    }
+
+    return result;
+  }
+
+  static _latLongQuery(latitude, longitude) {
+    return `?latitude=${latitude}&longitude=${longitude}`;
   }
 
   _isTokenValid() {
@@ -66,11 +80,19 @@ class Api {
       },
     })
       .then((response) => response.json())
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw new Error(
+          'Something went wrong, during the authentification process. \n' +
+            error
+        );
+      });
 
     if (result) {
+      //get the values
       const { access_token, issued_at, expires_in } = result;
+      //and save them
       Store.saveAuthToken(access_token, issued_at, expires_in);
+
       return access_token;
     } else {
       return null;

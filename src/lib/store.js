@@ -1,14 +1,14 @@
-export default class Store {
-  static AUTH_KEY = 'auth_key';
-  static AUTH_ISSUED_AT = 'auth_issued_at';
-  static AUTH_EXPIRES_IN = 'auth_expires_in';
+const AUTH_KEY = 'auth_key';
+const AUTH_ISSUED_AT = 'auth_issued_at';
+const AUTH_EXPIRES_IN = 'auth_expires_in';
 
+export default class Store {
   /**
    * @returns {string | false} The auth token or null if it's not found
    */
-  static getAuthToken = () => Store._checkValue(Store.AUTH_KEY);
-  static getAuthIssuedAt = () => Store._checkValue(Store.AUTH_ISSUED_AT);
-  static getAuthExpiresIn = () => Store._checkValue(Store.AUTH_EXPIRES_IN);
+  static getAuthToken = () => Store._checkValue(AUTH_KEY);
+  static getAuthIssuedAt = () => Store._checkValue(AUTH_ISSUED_AT);
+  static getAuthExpiresIn = () => Store._checkValue(AUTH_EXPIRES_IN);
 
   static saveAuthToken(accessToken, issuedAtSec, expiresInSec) {
     Store._saveValue(Store.AUTH_KEY, accessToken);
