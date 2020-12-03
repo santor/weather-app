@@ -1,20 +1,18 @@
 <template>
-  <div id="app">
-    <div>
-      <h3>Let us test your arithmetic.</h3>
-      <p>What is the sum of the two numbers?</p>
-      <div class="inline">
-        <p>{{ x1 }} + {{ x2 }} =</p>
-        <input v-model="guess" @keydown.enter="check" />
-        <button v-on:click="check" class="btn-primary">
-          Check Answer
-        </button>
-      </div>
-      <button v-on:click="refresh" class="btn-primary">
-        Refresh
+  <div>
+    <h3>Let us test your arithmetic.</h3>
+    <p>What is the sum of the two numbers?</p>
+    <div class="inline">
+      <p>{{ x1 }} + {{ x2 }} =</p>
+      <input v-model="guess" @keydown.enter="check" />
+      <button v-on:click="check" class="btn-primary">
+        Check Answer
       </button>
-      <p>{{ message }}</p>
     </div>
+    <button v-on:click="refresh" class="btn-primary">
+      Refresh
+    </button>
+    <p>{{ message }}</p>
   </div>
 </template>
 

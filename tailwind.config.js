@@ -11,7 +11,13 @@ module.exports = {
   },
   darkMode: 'media', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        we: {
+          light: '#fbf9f9',
+        },
+      },
+    },
   },
   variants: {
     extend: {
