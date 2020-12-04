@@ -1,20 +1,23 @@
-import Store from '@/store';
+import Store from './store.js';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
 const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
+const LAT_BERN = 46.954559326171875;
+const LON_BERN = 7.420684814453125;
 
-//Bern 46.954559326171875,7.420684814453125
 const API_URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
+//! actually I don't need the current day because it is also in the current hour
+//! and int the 7days forecast
 const API_URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current';
 // const API_URL_7_DAYS = 'https://api.srgssr.ch/forecasts/v1.0/weather/7day';
 // const API_URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
 // const API_URL_THIS_HOUR =
 //   'https://api.srgssr.ch/forecasts/v1.0/weather/nexthour';
 // const API_URL_SEARCH_LOCATION =
-//   'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&origins=zipcode,gg25,district,gazetteer&searchText=bern';
+//   'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&origins=zipcode,gg25,district&searchText=muri';
 
 //lets try a singleton in javascript
 class Api {
@@ -23,20 +26,16 @@ class Api {
       //maybe the token is already saved
       this.authToken = Store.getAuthToken();
     }
-
     return Api.instance;
   }
 
-  async getCurrentForecast(latitude, longitude) {
+  async getCurrentForecast(latitude = LAT_BERN, longitude = LON_BERN) {
     //if authToken undefined, then ask first for token
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
     const url = API_URL_CURRENT + Api._latLongQuery(latitude, longitude);
     const result = this._fetchForecast(url);
-    if (result) {
-      console.log(result);
-    }
 
     return result;
   }

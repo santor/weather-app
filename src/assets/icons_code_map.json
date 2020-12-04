@@ -1,0 +1,422 @@
+[
+  {
+    "Code": "1",
+    "Code_icon": "wi-day-sunny",
+    "Short_Description": "so",
+    "Long_Description_German": "Sonne",
+    "Long_Description_English": "sun"
+  },
+  {
+    "Code": "2",
+    "Code_icon": "wi-day-fog",
+    "Short_Description": "so_ne",
+    "Long_Description_German": "Sonne, Nebel",
+    "Long_Description_English": "sun, fog"
+  },
+  {
+    "Code": "3",
+    "Code_icon": "wi-day-cloudy",
+    "Short_Description": "so_grhe",
+    "Long_Description_German": "Sonne grosse hellgraue Wolke",
+    "Long_Description_English": "sun large light grey cloud"
+  },
+  {
+    "Code": "4",
+    "Code_icon": "wi-day-showers",
+    "Short_Description": "so_grhe_shra",
+    "Long_Description_German": "Sonne, grosse hellgraue Wolke Regenschauer",
+    "Long_Description_English": "sun, large light grey cloud Rain showers"
+  },
+  {
+    "Code": "5",
+    "Code_icon": "wi-day-storm-showers",
+    "Short_Description": "so_grhe_shra_bl",
+    "Long_Description_German": "Sonne, grosse hellgraue Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "sun, big light grey cloud, rain shower, lightning"
+  },
+  {
+    "Code": "6",
+    "Code_icon": "wi-day-snow",
+    "Short_Description": "so_grhe_shsn",
+    "Long_Description_German": "Sonne grosse hellgraue Wolke, Schneeschauer",
+    "Long_Description_English": "sun large light grey cloud, snow shower"
+  },
+  {
+    "Code": "7",
+    "Code_icon": "wi-day-snow-thunderstorm",
+    "Short_Description": "so_grhe_shsn_bl",
+    "Long_Description_German": "Sonne grosse hellgraue Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "sun big light grey cloud, snow shower, lightning"
+  },
+  {
+    "Code": "8",
+    "Code_icon": "wi-day-rain-mix",
+    "Short_Description": "so_grhe_shsr",
+    "Long_Description_German": "Sonne, grosse hellgraue Wolke, Schneeregenschauer",
+    "Long_Description_English": "sun, big light grey cloud, snow showers"
+  },
+  {
+    "Code": "9",
+    "Code_icon": "wi-day-sleet-storm",
+    "Short_Description": "so_grhe_shsr_bl",
+    "Long_Description_German": "Sonne, grosse hellgraue Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "sun, big light grey cloud, snow showers, lightning"
+  },
+  {
+    "Code": "10",
+    "Code_icon": "wi-day-cloudy-high",
+    "Short_Description": "so_klhe",
+    "Long_Description_German": "Sonne, kleine weisse Wolke",
+    "Long_Description_English": "sun, small white cloud"
+  },
+  {
+    "Code": "11",
+    "Code_icon": "wi-day-sprinkle",
+    "Short_Description": "so_klhe_shra",
+    "Long_Description_German": "Sonne, kleine weisse Wolke, Regenschauer",
+    "Long_Description_English": "sun, small white cloud, rain shower"
+  },
+  {
+    "Code": "12",
+    "Code_icon": "wi-day-sleet-storm",
+    "Short_Description": "so_klhe_shra_bl",
+    "Long_Description_German": "Sonne, kleine weisse Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "sun, small white cloud, rain shower, lightning"
+  },
+  {
+    "Code": "13",
+    "Code_icon": "wi-day-snow-wind",
+    "Short_Description": "so_klhe_shsn",
+    "Long_Description_German": "Sonne, kleine weisse Wolke, Schneeschauer",
+    "Long_Description_English": "sun, small white cloud, snow shower"
+  },
+  {
+    "Code": "14",
+    "Code_icon": "wi-day-snow-thunderstorm",
+    "Short_Description": "so_klhe_shsn_bl",
+    "Long_Description_German": "Sonne, kleine weisse Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "sun, small white cloud, snow shower, lightning"
+  },
+  {
+    "Code": "15",
+    "Code_icon": "wi-day-rain-mix",
+    "Short_Description": "so_klhe_shsr",
+    "Long_Description_German": "Sonne, kleine weisse Wolke, Schneeregenschauer",
+    "Long_Description_English": "sun, small white cloud, snow showers"
+  },
+  {
+    "Code": "16",
+    "Code_icon": "wi-day-sleet-storm",
+    "Short_Description": "so_klhe_shsr_bl",
+    "Long_Description_German": "Sonner, kleine weisse Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "sunny, small white cloud, snow shower, lightning"
+  },
+  {
+    "Code": "17",
+    "Code_icon": "wi-fog",
+    "Short_Description": "ne",
+    "Long_Description_German": "Nebel",
+    "Long_Description_English": "fog"
+  },
+  {
+    "Code": "18",
+    "Code_icon": "wi-cloudy",
+    "Short_Description": "grdu",
+    "Long_Description_German": "Grosse dunkle Wolke",
+    "Long_Description_English": "large dark cloud"
+  },
+  {
+    "Code": "19",
+    "Code_icon": "wi-cloudy",
+    "Short_Description": "grhe",
+    "Long_Description_German": "Grosse hellgraue Wolke",
+    "Long_Description_English": "large light grey cloud"
+  },
+  {
+    "Code": "20",
+    "Code_icon": "wi-showers",
+    "Short_Description": "grdu_ra",
+    "Long_Description_German": "Grosse dunkle Wolke, Regen",
+    "Long_Description_English": "big dark cloud, rain"
+  },
+  {
+    "Code": "21",
+    "Code_icon": "wi-snow",
+    "Short_Description": "grdu_sn",
+    "Long_Description_German": "Grosse dunkle Wolke, Schnee",
+    "Long_Description_English": "big dark cloud, snow"
+  },
+  {
+    "Code": "22",
+    "Code_icon": "wi-rain-mix",
+    "Short_Description": "grdu_sr",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregen",
+    "Long_Description_English": "big dark cloud, snow rain"
+  },
+  {
+    "Code": "23",
+    "Code_icon": "wi-rain",
+    "Short_Description": "grdu_ra3",
+    "Long_Description_German": "Grosse dunkle, starker Regen",
+    "Long_Description_English": "big dark, heavy rain"
+  },
+  {
+    "Code": "24",
+    "Code_icon": "wi-snow-wind",
+    "Short_Description": "grdu_sn3",
+    "Long_Description_German": "Grosse dunkle, starker Schneefall",
+    "Long_Description_English": "big dark, heavy snowfall"
+  },
+  {
+    "Code": "25",
+    "Code_icon": "wi-hail",
+    "Short_Description": "grdu_shra",
+    "Long_Description_German": "Grosse dunkle Wolke, Regenschauer",
+    "Long_Description_English": "big dark cloud, rain shower"
+  },
+  {
+    "Code": "26",
+    "Code_icon": "wi-thunderstorm",
+    "Short_Description": "grdu_shra_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "big dark cloud, rain shower, lightning"
+  },
+  {
+    "Code": "27",
+    "Code_icon": "wi-snow-wind",
+    "Short_Description": "grdu_shsn",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeschauer",
+    "Long_Description_English": "big dark cloud, snow shower"
+  },
+  {
+    "Code": "28",
+    "Code_icon": "wi-storm-showers",
+    "Short_Description": "grdu_shsn_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "big dark cloud, snow showers, lightning"
+  },
+  {
+    "Code": "29",
+    "Code_icon": "wi-rain-mix",
+    "Short_Description": "grdu_shsr",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregenschauer",
+    "Long_Description_English": "large dark cloud, snow showers"
+  },
+  {
+    "Code": "30",
+    "Code_icon": "wi-storm-showers",
+    "Short_Description": "grdu_shsr_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "big dark cloud, snow showers, lightning"
+  },
+  {
+    "Code": "-1",
+    "Code_icon": "wi-night-clear",
+    "Short_Description": "mo",
+    "Long_Description_German": "Mond",
+    "Long_Description_English": "moon"
+  },
+  {
+    "Code": "-2",
+    "Code_icon": "wi-night-fog",
+    "Short_Description": "mo_ne",
+    "Long_Description_German": "Mond, Nebel",
+    "Long_Description_English": "moon, fog"
+  },
+  {
+    "Code": "-3",
+    "Code_icon": "wi-night-alt-cloudy",
+    "Short_Description": "mo_grhe",
+    "Long_Description_German": "Mond grosse hellgraue Wolke",
+    "Long_Description_English": "moon large light grey cloud"
+  },
+  {
+    "Code": "-4",
+    "Code_icon": "wi-night-alt-rain",
+    "Short_Description": "mo_grhe_shra",
+    "Long_Description_German": "Mond, grosse hellgraue Wolke Regenschauer",
+    "Long_Description_English": "moon, big light grey cloud rain showers"
+  },
+  {
+    "Code": "-5",
+    "Code_icon": "wi-night-thunderstorm",
+    "Short_Description": "mo_grhe_shra_bl",
+    "Long_Description_German": "Mond, grosse hellgraue Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "moon, large light grey cloud, rain shower, lightning"
+  },
+  {
+    "Code": "-6",
+    "Code_icon": "wi-night-alt-snow-wind",
+    "Short_Description": "mo_grhe_shsn",
+    "Long_Description_German": "Mond grosse hellgraue Wolke, Schneeschauer",
+    "Long_Description_English": "moon large light grey cloud, snow shower"
+  },
+  {
+    "Code": "-7",
+    "Code_icon": "wi-night-snow-thunderstorm",
+    "Short_Description": "mo_grhe_shsn_bl",
+    "Long_Description_German": "Mond grosse hellgraue Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "moon big light grey cloud, snow shower, lightning"
+  },
+  {
+    "Code": "-8",
+    "Code_icon": "wi-night-rain-mix",
+    "Short_Description": "mo_grhe_shsr",
+    "Long_Description_German": "Mond, grosse hellgraue Wolke, Schneeregenschauer",
+    "Long_Description_English": "moon, big light grey cloud, snow showers"
+  },
+  {
+    "Code": "-9",
+    "Code_icon": "wi-night-sleet-storm",
+    "Short_Description": "mo_grhe_shsr_bl",
+    "Long_Description_German": "Mond, grosse hellgraue Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "moon, big light grey cloud, snow shower, lightning"
+  },
+  {
+    "Code": "-10",
+    "Code_icon": "wi-night-alt-partly-cloudy",
+    "Short_Description": "mo_klhe",
+    "Long_Description_German": "Mond, kleine weisse Wolke",
+    "Long_Description_English": "moon, small white cloud"
+  },
+  {
+    "Code": "-11",
+    "Code_icon": "wi-night-showers",
+    "Short_Description": "mo_klhe_shra",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Regenschauer",
+    "Long_Description_English": "moon, small white cloud, rain shower"
+  },
+  {
+    "Code": "-12",
+    "Code_icon": "wi-night-alt-storm-showers",
+    "Short_Description": "mo_klhe_shra_bl",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "moon, small white cloud, rain shower, lightning"
+  },
+  {
+    "Code": "-13",
+    "Code_icon": "wi-night-snow",
+    "Short_Description": "mo_klhe_shsn",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Schneeschauer",
+    "Long_Description_English": "moon, small white cloud, snow shower"
+  },
+  {
+    "Code": "-14",
+    "Code_icon": "wi-night-snow-thunderstorm",
+    "Short_Description": "mo_klhe_shsn_bl",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "moon, small white cloud, snow shower, lightning"
+  },
+  {
+    "Code": "-15",
+    "Code_icon": "wi-night-rain-mix",
+    "Short_Description": "mo_klhe_shsr",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Schneeregenschauer",
+    "Long_Description_English": "moon, small white cloud, snow showers"
+  },
+  {
+    "Code": "-16",
+    "Code_icon": "wi-night-sleet-storm",
+    "Short_Description": "mo_klhe_shsr_bl",
+    "Long_Description_German": "Mond, kleine weisse Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "moon, small white cloud, snow showers, lightning"
+  },
+  {
+    "Code": "-17",
+    "Code_icon": "wi-night-fog",
+    "Short_Description": "ne",
+    "Long_Description_German": "Nebel",
+    "Long_Description_English": "fog"
+  },
+  {
+    "Code": "-18",
+    "Code_icon": "wi-night-cloudy",
+    "Short_Description": "grdu",
+    "Long_Description_German": "Grosse dunkle Wolke",
+    "Long_Description_English": "large dark cloud"
+  },
+  {
+    "Code": "-19",
+    "Code_icon": "wi-night-cloudy",
+    "Short_Description": "grhe",
+    "Long_Description_German": "Grosse hellgraue Wolke",
+    "Long_Description_English": "large light grey cloud"
+  },
+  {
+    "Code": "-20",
+    "Code_icon": "wi-night-showers",
+    "Short_Description": "grdu_ra",
+    "Long_Description_German": "Grosse dunkle Wolke, Regen",
+    "Long_Description_English": "big dark cloud, rain"
+  },
+  {
+    "Code": "-21",
+    "Code_icon": "wi-night-snow",
+    "Short_Description": "grdu_sn",
+    "Long_Description_German": "Grosse dunkle Wolke, Schnee",
+    "Long_Description_English": "big dark cloud, snow"
+  },
+  {
+    "Code": "-22",
+    "Code_icon": "wi-night-rain-mix",
+    "Short_Description": "grdu_sr",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregen",
+    "Long_Description_English": "big dark cloud, snow rain"
+  },
+  {
+    "Code": "-23",
+    "Code_icon": "wi-night-rain",
+    "Short_Description": "grdu_ra3",
+    "Long_Description_German": "Grosse dunkle, starker Regen",
+    "Long_Description_English": "big dark, heavy rain"
+  },
+  {
+    "Code": "-24",
+    "Code_icon": "wi-night-snow-wind",
+    "Short_Description": "grdu_sn3",
+    "Long_Description_German": "Grosse dunkle, starker Schneefall",
+    "Long_Description_English": "big dark, heavy snowfall"
+  },
+  {
+    "Code": "-25",
+    "Code_icon": "wi-night-hail",
+    "Short_Description": "grdu_shra",
+    "Long_Description_German": "Grosse dunkle Wolke, Regenschauer",
+    "Long_Description_English": "big dark cloud, rain shower"
+  },
+  {
+    "Code": "-26",
+    "Code_icon": "wi-night-thunderstorm",
+    "Short_Description": "grdu_shra_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Regenschauer, Blitz",
+    "Long_Description_English": "big dark cloud, rain shower, lightning"
+  },
+  {
+    "Code": "-27",
+    "Code_icon": "wi-night-snow-wind",
+    "Short_Description": "grdu_shsn",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeschauer",
+    "Long_Description_English": "big dark cloud, snow shower"
+  },
+  {
+    "Code": "-28",
+    "Code_icon": "wi-night-storm-showers",
+    "Short_Description": "grdu_shsn_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeschauer, Blitz",
+    "Long_Description_English": "big dark cloud, snow showers, lightning"
+  },
+  {
+    "Code": "-29",
+    "Code_icon": "wi-night-rain-mix",
+    "Short_Description": "grdu_shsr",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregenschauer",
+    "Long_Description_English": "large dark cloud, snow showers"
+  },
+  {
+    "Code": "-30",
+    "Code_icon": "wi-night-storm-showers",
+    "Short_Description": "grdu_shsr_bl",
+    "Long_Description_German": "Grosse dunkle Wolke, Schneeregenschauer, Blitz",
+    "Long_Description_English": "big dark cloud, snow showers, lightning"
+  }
+]

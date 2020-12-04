@@ -14,7 +14,7 @@
 
   // console.log(Api);
   const myApi = Api;
-  myApi.getCurrentForecast(46.954559326171875, 7.420684814453125);
+  myApi.getCurrentForecast();
   export default {
     name: 'App',
 
