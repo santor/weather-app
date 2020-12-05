@@ -4,8 +4,6 @@ const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
 const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
-const LAT_BERN = 46.954559326171875;
-const LON_BERN = 7.420684814453125;
 
 const API_URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
@@ -29,31 +27,27 @@ class Api {
     return Api.instance;
   }
 
-  async getCurrentForecast(latitude = LAT_BERN, longitude = LON_BERN) {
+  async getCurrentForecast(latitude, longitude) {
     //if authToken undefined, then ask first for token
+    if (!latitude || !longitude) {
+      latitude = Store.getLatitude();
+      longitude = Store.getLongitude();
+    }
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
     const url = API_URL_CURRENT + Api._latLongQuery(latitude, longitude);
-    const result = this._fetchForecast(url);
-
-    return result;
+    return this._fetchForecast(url);
   }
 
   async _fetchForecast(url) {
-    const result = await fetch(url, {
+    return await fetch(url, {
       headers: {
         Authorization: 'Bearer ' + this.authToken,
       },
     })
       .then((response) => response.json())
       .catch((error) => console.log(error));
-
-    if (result) {
-      console.log(result);
-    }
-
-    return result;
   }
 
   static _latLongQuery(latitude, longitude) {

@@ -33,7 +33,8 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "tailwindcss-scroll-snap": "^1.0.3",
     "typescript": "^4.1.2",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "vue-svg-inline-loader": "^2.0.0"
   },
   "browserslist": [
     "> 1%",

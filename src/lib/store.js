@@ -1,6 +1,12 @@
 const AUTH_KEY = 'auth_key';
 const AUTH_ISSUED_AT = 'auth_issued_at';
 const AUTH_EXPIRES_IN = 'auth_expires_in';
+const CURR_LOCATION = 'curr_location';
+const CURR_LATITUDE = 'curr_lat';
+const CURR_LONGITUDE = 'curr_lon';
+const DEFAULT_LOCATION = 'Bern';
+const DEFAULT_LATITUDE = 46.954559326171875;
+const DEFAULT_LONGITUDE = 7.420684814453125;
 
 export default class Store {
   /**
@@ -10,10 +16,29 @@ export default class Store {
   static getAuthIssuedAt = () => Store._checkValue(AUTH_ISSUED_AT);
   static getAuthExpiresIn = () => Store._checkValue(AUTH_EXPIRES_IN);
 
+  static getLocation = () =>
+    Store._checkValue(CURR_LOCATION)
+      ? Store._checkValue(CURR_LOCATION)
+      : DEFAULT_LOCATION;
+  static getLatitude = () =>
+    Store._checkValue(CURR_LATITUDE)
+      ? Store._checkValue(CURR_LATITUDE)
+      : DEFAULT_LATITUDE;
+  static getLongitude = () =>
+    Store._checkValue(CURR_LONGITUDE)
+      ? Store._checkValue(CURR_LONGITUDE)
+      : DEFAULT_LONGITUDE;
+
   static saveAuthToken(accessToken, issuedAtSec, expiresInSec) {
-    Store._saveValue(Store.AUTH_KEY, accessToken);
-    Store._saveValue(Store.AUTH_ISSUED_AT, issuedAtSec);
-    Store._saveValue(Store.AUTH_EXPIRES_IN, expiresInSec);
+    Store._saveValue(AUTH_KEY, accessToken);
+    Store._saveValue(AUTH_ISSUED_AT, issuedAtSec);
+    Store._saveValue(AUTH_EXPIRES_IN, expiresInSec);
+  }
+
+  static saveCurrentLocation(location, latitude, longitude) {
+    Store._saveValue(CURR_LOCATION, location);
+    Store._saveValue(CURR_LATITUDE, latitude);
+    Store._saveValue(CURR_LONGITUDE, longitude);
   }
 
   static _saveValue(key, value) {
