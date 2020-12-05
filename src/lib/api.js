@@ -27,6 +27,13 @@ class Api {
     return Api.instance;
   }
 
+  _handleErrors(response) {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  }
+
   async getCurrentForecast(latitude, longitude) {
     //if authToken undefined, then ask first for token
     if (!latitude || !longitude) {
@@ -37,7 +44,7 @@ class Api {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
     const url = API_URL_CURRENT + Api._latLongQuery(latitude, longitude);
-    return this._fetchForecast(url);
+    return this._fetchForecast(url); //not helping to await
   }
 
   async _fetchForecast(url) {
@@ -46,8 +53,10 @@ class Api {
         Authorization: 'Bearer ' + this.authToken,
       },
     })
-      .then((response) => response.json())
-      .catch((error) => console.log(error));
+      .then(this._handleErrors)
+      .then((response) => response.json());
+
+    // .catch((error) => console.log('Fetch forecast error: ' + error));
   }
 
   static _latLongQuery(latitude, longitude) {
@@ -72,13 +81,14 @@ class Api {
         Authorization: `Basic ${ENCODED_KEY}`,
       },
     })
-      .then((response) => response.json())
-      .catch((error) => {
-        throw new Error(
-          'Something went wrong, during the authentification process. \n' +
-            error
-        );
-      });
+      .then(this._handleErrors)
+      .then((response) => response.json());
+    // .catch((error) => {
+    //   throw new Error(
+    //     'Something went wrong, during the authentification process. \n' +
+    //       error
+    //   );
+    // });
 
     if (result) {
       //get the values
@@ -94,6 +104,6 @@ class Api {
 }
 
 const instance = new Api();
-Object.freeze(instance);
+// Object.freeze(instance);
 
 export default instance;
