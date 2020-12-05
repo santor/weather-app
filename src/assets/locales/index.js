@@ -4,6 +4,7 @@ const messages = {
   en: {
     couldNotFetch:
       'Could not fetch weather data. The service might be temporarily unavailable.',
+    error: 'Error',
   },
   de: {
     ...de,

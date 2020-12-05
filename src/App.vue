@@ -1,7 +1,8 @@
 <template>
   <div class="content flex-5 p-8 md:p-16 xl:p-32">
     <header>
-      <div>{{ errorMessage }}</div>
+      <!-- <div>{{ errorMessage }}</div> -->
+      <ErrorAlert v-if="errorMessage != ''" :message="errorMessage" />
       <Location
         :locationName="
           currentWeather.location ? currentWeather.location : 'Bern'
@@ -24,6 +25,7 @@
   import Hourly from '@/components/Hourly';
   import Current from '@/components/Current';
   import Daily from '@/components/Daily';
+  import ErrorAlert from '@/components/ErrorAlert';
   import Api from '@/lib/api';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -36,6 +38,7 @@
       Hourly,
       Current,
       Daily,
+      ErrorAlert,
     },
 
     setup() {
