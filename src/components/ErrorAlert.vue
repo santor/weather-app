@@ -1,27 +1,34 @@
 <template>
+  <!-- Toast Notification Danger -->
   <div
-    class="alert flex flex-row items-center bg-red-200 p-5 rounded border-b-2 border-red-300"
+    class="fixed z-50 top-4 left-4 right-4 sm:right-16 sm:left-16 sm:top-8 md:left-1/4 md:right-1/4 2xl:left-1/3 2xl:right-1/3 flex items-center bg-red-500 border-1 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2 rounded-lg"
   >
+    <!-- icons -->
     <div
-      class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full"
+      @click="$emit('dismiss')"
+      class="cursor-pointer text-red-500 rounded-full bg-white mr-3"
     >
-      <span class="text-red-500">
-        <svg fill="currentColor" viewBox="0 0 20 20" class="h-6 w-6">
-          <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </span>
+      <svg
+        width="1.8em"
+        height="1.8em"
+        viewBox="0 0 16 16"
+        class="bi bi-x"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z"
+        />
+      </svg>
     </div>
-    <div class="alert-content ml-4">
-      <div class="alert-title font-semibold text-lg text-red-800">
-        {{ t('error') }}
-      </div>
-      <div class="alert-description text-sm text-red-600">
-        {{ message }}
-      </div>
+    <!-- message -->
+    <div class="text-white max-w-lg ">
+      {{ message }}
     </div>
   </div>
 </template>
@@ -33,6 +40,7 @@
     props: {
       message: String,
     },
+    emits: ['dismiss'],
 
     setup() {
       const { t } = useI18n();

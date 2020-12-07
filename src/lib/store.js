@@ -16,7 +16,7 @@ export default class Store {
   static getAuthIssuedAt = () => Store._checkValue(AUTH_ISSUED_AT);
   static getAuthExpiresIn = () => Store._checkValue(AUTH_EXPIRES_IN);
 
-  static getLocation = () =>
+  static getLastLocation = () =>
     Store._checkValue(CURR_LOCATION)
       ? Store._checkValue(CURR_LOCATION)
       : DEFAULT_LOCATION;

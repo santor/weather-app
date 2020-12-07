@@ -1,13 +1,22 @@
 <template>
   <div class="content flex-5 p-8 md:p-16 xl:p-32">
-    <header>
-      <!-- <div>{{ errorMessage }}</div> -->
-      <ErrorAlert v-if="errorMessage != ''" :message="errorMessage" />
-      <Location
-        :locationName="
-          currentWeather.location ? currentWeather.location : 'Bern'
-        "
+    <transition name="fade">
+      <ErrorAlert
+        v-if="errorMessage != ''"
+        @dismiss="clearError"
+        :message="errorMessage"
       />
+    </transition>
+    <header>
+      <div class="flex flex-row justify-between">
+        <Location
+          class="self-center"
+          :locationName="
+            currentWeather.location ? currentWeather.location : 'Bern'
+          "
+        />
+        <Search @latLonChange="onLocationChange" />
+      </div>
     </header>
 
     <main>
@@ -26,6 +35,7 @@
   import Current from '@/components/Current';
   import Daily from '@/components/Daily';
   import ErrorAlert from '@/components/ErrorAlert';
+  import Search from '@/components/Search';
   import Api from '@/lib/api';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -39,6 +49,7 @@
       Current,
       Daily,
       ErrorAlert,
+      Search,
     },
 
     setup() {
@@ -53,8 +64,22 @@
         precipitationMm: '',
         precipitationProbablility: '',
       });
+
+      const onLocationChange = (geo) => {
+        getCurrentForecast(geo.lat, geo.lon);
+        // console.log(geo.lat + ' ' + geo.lon);
+      };
+
+      //clear error when dismiss is emitted, so the error will not show anymore
+      const clearError = function() {
+        errorMessage.value = '';
+      };
       onMounted(() => {
-        Api.getCurrentForecast()
+        getCurrentForecast();
+      });
+
+      function getCurrentForecast(lat, lon) {
+        Api.getCurrentForecast(lat, lon)
           .then((weather) => {
             currentWeather.location = weather.info.name.de;
             const currentHour = weather.current_hour[0];
@@ -71,16 +96,26 @@
             errorMessage.value = t('couldNotFetch');
             console.log('[App.vue] ' + error);
           });
-      });
-
+      }
       return {
         t,
         currentWeather,
         errorMessage,
+        clearError,
+        onLocationChange,
       };
     },
   };
-  // const app = {}
-
-  // export { app };
 </script>
+
+<style scoped>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.25s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+</style>
