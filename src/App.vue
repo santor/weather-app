@@ -9,12 +9,7 @@
     </transition>
     <header>
       <div class="flex flex-row justify-between">
-        <Location
-          class="self-center"
-          :locationName="
-            currentWeather.location ? currentWeather.location : 'Bern'
-          "
-        />
+        <Location class="self-center" :locationName="location" />
         <Search @latLonChange="onLocationChange" />
       </div>
     </header>
@@ -37,6 +32,7 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
+  import Store from '@/lib/store';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
@@ -55,19 +51,25 @@
     setup() {
       const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
       const errorMessage = ref('');
+      const location = ref('');
       const currentWeather = reactive({
-        location: '',
+        // location: '',
         iconCode: '',
         temperature: '',
         windSpeed: '',
         windDirection: '',
-        precipitationMm: '',
-        precipitationProbablility: '',
+        precMm: '',
+        precProbability: '',
       });
 
-      const onLocationChange = (geo) => {
-        getCurrentForecast(geo.lat, geo.lon);
-        // console.log(geo.lat + ' ' + geo.lon);
+      const onLocationChange = (locationData) => {
+        const sanitizedLocation = locationData.name.replace(/\([^()]*\)/g, '');
+        location.value = sanitizedLocation;
+        getCurrentForecast(
+          locationData.lat,
+          locationData.lon,
+          sanitizedLocation
+        );
       };
 
       //clear error when dismiss is emitted, so the error will not show anymore
@@ -76,21 +78,30 @@
       };
       onMounted(() => {
         getCurrentForecast();
+        location.value = Store.getLastLocation();
       });
 
-      function getCurrentForecast(lat, lon) {
-        Api.getCurrentForecast(lat, lon)
+      function getCurrentForecast(lat, lon, location) {
+        Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
-            currentWeather.location = weather.info.name.de;
-            const currentHour = weather.current_hour[0];
-            currentWeather.iconCode = currentHour.values[0].smb3;
-            currentWeather.temperature = currentHour.values[1].ttt;
-            currentWeather.windSpeed = currentHour.values[2].fff;
-            currentWeather.windDirection = currentHour.values[4].ddd;
-            currentWeather.precipitationMm = currentHour.values[5].rr3;
-            currentWeather.precipitationProbablility =
-              currentHour.values[6].pr3;
+            // currentWeather.location = weather.location;
+            currentWeather.iconCode = weather.iconCode;
+            currentWeather.temperature = weather.temperature;
+            currentWeather.windSpeed = weather.windSpeed;
+            currentWeather.windDirection = weather.windDirection;
+            currentWeather.precMm = weather.precMm;
+            currentWeather.precProbability = weather.precProbability;
+            // currentWeather.location = weather.info.name.de;
+            // const currentHour = weather.current_hour[0];
+            // currentWeather.iconCode = currentHour.values[0].smb3;
+            // currentWeather.temperature = currentHour.values[1].ttt;
+            // currentWeather.windSpeed = currentHour.values[2].fff;
+            // currentWeather.windDirection = currentHour.values[4].ddd;
+            // currentWeather.precipitationMm = currentHour.values[5].rr3;
+            // currentWeather.precipitationProbablility =
+            //   currentHour.values[6].pr3;
             // console.log(currentWeather);
+            console.log(weather);
           })
           .catch((error) => {
             errorMessage.value = t('couldNotFetch');
@@ -103,6 +114,7 @@
         errorMessage,
         clearError,
         onLocationChange,
+        location,
       };
     },
   };

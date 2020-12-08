@@ -2,6 +2,7 @@ import Store from './store.js';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
+const OPEN_WEATHER = process.env.OPEN_WEATHER_APP_ID;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
 const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
 
@@ -29,9 +30,9 @@ class Api {
 
   _handleErrors(response) {
     if (!response.ok) {
-      throw Error(response.statusText);
+      throw new Error('HTTP error, status = ' + response.status);
     }
-    return response;
+    return response.json();
   }
 
   async searchLocation(searchTerm) {
@@ -45,71 +46,82 @@ class Api {
     }));
   }
 
-  async getCurrentForecast(latitude, longitude) {
-    console.log(latitude, longitude);
-    // //if authToken undefined, then ask first for token
-    // if (!latitude || !longitude) {
-    //   latitude = Store.getLatitude();
-    //   longitude = Store.getLongitude();
-    // }
-    // if (!this._isTokenValid()) {
-    //   this.authToken = await this._fetchAndStoreAuthToken();
-    // }
-    // const url = API_URL_CURRENT + Api._latLongQuery(latitude, longitude);
-    // return this._fetchForecast(url); //not helping to await
-    return {
-      current_hour: [
-        {
-          date: '2020-12-02T22:00:00+0100',
-          values: [
-            {
-              smb3: '-3',
-            },
-            {
-              ttt: '0.0',
-            },
-            {
-              fff: '4',
-            },
-            {
-              ffx3: '13',
-            },
-            {
-              ddd: '75',
-            },
-            {
-              rr3: '0.0',
-            },
-            {
-              pr3: '10',
-            },
-          ],
-        },
-      ],
-      info: {
-        id: 3073,
-        name: {
-          de: 'Gümligen',
-        },
-        plz: 3073,
-      },
-    };
+  /**
+   * @throws [Errors]
+   * @param {*} latitude Latitude of the location
+   * @param {*} longitude Longitude of the location
+   */
+  async getCurrentForecast(latitude, longitude, location) {
+    if (!latitude || !longitude) {
+      latitude = Store.getLatitude();
+      longitude = Store.getLongitude();
+    } else if (location && latitude && longitude) {
+      Store.saveCurrentLocation(location, latitude, longitude);
+    }
+    try {
+      //if authToken undefined, then ask first for token
+      if (!this._isTokenValid()) {
+        this.authToken = await this._fetchAndStoreAuthToken();
+      }
+      return await this._fetchForecast(
+        Api._currentWeatherUrl(latitude, longitude)
+      );
+    } catch (error) {
+      //there was an error, calling the srf api
+      console.log('error in current swiss ' + error);
+      return await this._fetchOpenWeather(
+        Api._openWeatherUrl(latitude, longitude)
+      );
+    }
+  }
+
+  async _fetchOpenWeather(url) {
+    const result = await fetch(url).then(this._handleErrors);
+
+    if (result) {
+      // console.log(result);
+      return {
+        // location: r.info.name.de,
+        iconCode: result.current.weather[0].icon, //different then the srf icon data
+        temperature: result.current.temp,
+        windSpeed: result.current.wind_speed,
+        windDirection: result.current.wind_deg,
+        precMm: result.minutely[0].precipitation,
+        precProbability: result.hourly[0].pop,
+      };
+    } else {
+      return null;
+    }
+  }
+
+  static _openWeatherUrl(latitude, longitude) {
+    return `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${OPEN_WEATHER}`;
   }
 
   async _fetchForecast(url) {
-    return await fetch(url, {
+    const result = await fetch(url, {
       headers: {
         Authorization: 'Bearer ' + this.authToken,
       },
-    })
-      .then(this._handleErrors)
-      .then((response) => response.json());
+    }).then(this._handleErrors);
 
-    // .catch((error) => console.log('Fetch forecast error: ' + error));
+    if (result) {
+      return {
+        // location: r.info.name.de,
+        iconCode: result.currentHour[0].values[0].smb3,
+        temperature: result.currentHour[0].values[1].ttt,
+        windSpeed: result.currentHour[0].values[2].fff,
+        windDirection: result.currentHour[0].values[4].ddd,
+        precMm: result.currentHour[0].values[5].rr3,
+        precProbability: result.currentHour[0].values[6].pr3,
+      };
+    } else {
+      return null;
+    }
   }
 
-  static _latLongQuery(latitude, longitude) {
-    return `?latitude=${latitude}&longitude=${longitude}`;
+  static _currentWeatherUrl(latitude, longitude) {
+    return `https://api.srgssr.ch/forecasts/v1.0/weather/current?latitude=${latitude}&longitude=${longitude}`;
   }
 
   _isTokenValid() {
@@ -124,20 +136,18 @@ class Api {
   }
 
   async _fetchAndStoreAuthToken() {
+    // const result = await axios(API_URL_AUTH, {
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `Basic ${ENCODED_KEY}`,
+    //   },
+    // }).then((response) => response.data);
     const result = await fetch(API_URL_AUTH, {
       method: 'POST',
       headers: {
         Authorization: `Basic ${ENCODED_KEY}`,
       },
-    })
-      .then(this._handleErrors)
-      .then((response) => response.json());
-    // .catch((error) => {
-    //   throw new Error(
-    //     'Something went wrong, during the authentification process. \n' +
-    //       error
-    //   );
-    // });
+    }).then(this._handleErrors);
 
     if (result) {
       //get the values
