@@ -35,10 +35,13 @@ export default class Store {
     Store._saveValue(AUTH_EXPIRES_IN, expiresInSec);
   }
 
-  static saveCurrentLocation(location, latitude, longitude) {
+  static saveCurrentLocation(location) {
     Store._saveValue(CURR_LOCATION, location);
-    Store._saveValue(CURR_LATITUDE, latitude);
-    Store._saveValue(CURR_LONGITUDE, longitude);
+  }
+
+  static saveCurrentCoordinates(lat, lon) {
+    Store._saveValue(CURR_LATITUDE, lat);
+    Store._saveValue(CURR_LONGITUDE, lon);
   }
 
   static _saveValue(key, value) {

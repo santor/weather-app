@@ -77,13 +77,22 @@
         errorMessage.value = '';
       };
       onMounted(() => {
-        getCurrentForecast();
+        const coords = getLocation();
+        if (coords) {
+          getCurrentForecast(coords.latitude, coords.longitude);
+        } else {
+          getCurrentForecast();
+        }
         location.value = Store.getLastLocation();
       });
 
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
+            console.log(weather);
+            if (weather.location) {
+              location.value = weather.location;
+            }
             // currentWeather.location = weather.location;
             currentWeather.iconCode = weather.iconCode;
             currentWeather.temperature = weather.temperature;
@@ -101,12 +110,27 @@
             // currentWeather.precipitationProbablility =
             //   currentHour.values[6].pr3;
             // console.log(currentWeather);
-            console.log(weather);
+            // console.log(weather);
           })
           .catch((error) => {
             errorMessage.value = t('couldNotFetch');
             console.log('[App.vue] ' + error);
           });
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          return navigator.geolocation.getCurrentPosition(
+            searchWeatherForPosition
+          );
+        } else {
+          console.log('Geolocation blocked');
+          return false;
+        }
+      }
+
+      function searchWeatherForPosition(position) {
+        return position.coords;
       }
       return {
         t,
