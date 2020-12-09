@@ -9,7 +9,7 @@
     </transition>
     <header>
       <div class="flex flex-row justify-between">
-        <Location class="self-center" :locationName="location" />
+        <Location class="self-center" :locationName="locationName" />
         <Search @latLonChange="onLocationChange" />
       </div>
     </header>
@@ -51,7 +51,7 @@
     setup() {
       const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
       const errorMessage = ref('');
-      const location = ref('');
+      const locationName = ref('');
       const currentWeather = reactive({
         // location: '',
         iconCode: '',
@@ -64,7 +64,7 @@
 
       const onLocationChange = (locationData) => {
         const sanitizedLocation = locationData.name.replace(/\([^()]*\)/g, '');
-        location.value = sanitizedLocation;
+        locationName.value = sanitizedLocation;
         getCurrentForecast(
           locationData.lat,
           locationData.lon,
@@ -83,7 +83,7 @@
         } else {
           getCurrentForecast();
         }
-        location.value = Store.getLastLocation();
+        locationName.value = Store.getLastLocation();
       });
 
       function getCurrentForecast(lat, lon, location) {
@@ -91,7 +91,7 @@
           .then((weather) => {
             console.log(weather);
             if (weather.location) {
-              location.value = weather.location;
+              locationName.value = weather.location;
             }
             // currentWeather.location = weather.location;
             currentWeather.iconCode = weather.iconCode;
@@ -138,7 +138,7 @@
         errorMessage,
         clearError,
         onLocationChange,
-        location,
+        locationName,
       };
     },
   };

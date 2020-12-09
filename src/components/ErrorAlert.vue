@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { useI18n } from 'vue-i18n';
+  // import { useI18n } from 'vue-i18n';
   export default {
     name: 'ErrorAlert',
     props: {
@@ -42,12 +42,12 @@
     },
     emits: ['dismiss'],
 
-    setup() {
-      const { t } = useI18n();
+    // setup() {
+    //   // const { t } = useI18n();
 
-      return {
-        t,
-      };
-    },
+    //   return {
+    //     t,
+    //   };
+    // },
   };
 </script>

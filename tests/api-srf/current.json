@@ -1,0 +1,119 @@
+{
+  "formatted_date": "02.12.2020",
+  "current_day": {
+    "date": "2020-12-02",
+    "values": [
+      {
+        "ttn": "-0.1"
+      },
+      {
+        "smbd": "3"
+      },
+      {
+        "ttx": "2.2"
+      }
+    ]
+  },
+  "current_hour": [
+    {
+      "date": "2020-12-02T22:00:00+0100",
+      "values": [
+        {
+          "smb3": "-3"
+        },
+        {
+          "ttt": "0.0"
+        },
+        {
+          "fff": "4"
+        },
+        {
+          "ffx3": "13"
+        },
+        {
+          "ddd": "75"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "10"
+        }
+      ]
+    }
+  ],
+  "info": {
+    "id": 3073,
+    "name": {
+      "de": "Gümligen"
+    },
+    "plz": 3073
+  },
+  "type": "forecasts",
+  "units": {
+    "dd3": {
+      "name": "winddirection_10m_mean_3h",
+      "unit": "°"
+    },
+    "ddd": {
+      "name": "winddirection_10m_mean_1d",
+      "unit": "°"
+    },
+    "ff3": {
+      "name": "windspeed_10m_mean_3h",
+      "unit": "km/h"
+    },
+    "ffd": {
+      "name": "windspeed_10m_mean_1d",
+      "unit": "km/h"
+    },
+    "fff": {
+      "name": "windspeed_10m_mean_1h",
+      "unit": "km/h"
+    },
+    "ffx3": {
+      "name": "windspeed_10m_max_3h",
+      "unit": "km/h"
+    },
+    "fxd": {
+      "name": "windspeed_10m_max_1d",
+      "unit": "km/h"
+    },
+    "pr3": {
+      "name": "probrain_3h",
+      "unit": "%"
+    },
+    "prd": {
+      "name": "probrain_1d",
+      "unit": "%"
+    },
+    "rr3": {
+      "name": "precipitation_1.5m_sum_3h",
+      "unit": "mm"
+    },
+    "rsd": {
+      "name": "precipitation_1.5m_sum_1d",
+      "unit": "mm"
+    },
+    "smb3": {
+      "name": "symbol",
+      "unit": "code"
+    },
+    "smbd": {
+      "name": "symbol",
+      "unit": "code"
+    },
+    "ttn": {
+      "name": "temperature_2m_min",
+      "unit": "°C"
+    },
+    "ttt": {
+      "name": "temperature_2m_act",
+      "unit": "°C"
+    },
+    "ttx": {
+      "name": "temperature_2m_max",
+      "unit": "°C"
+    }
+  }
+}

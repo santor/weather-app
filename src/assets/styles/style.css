@@ -19,7 +19,23 @@
     /* Gecko Browsers */
   }
 
-  .btn-primary {
-    @apply pb-1 pt-1 pr-4 pl-4 bg-blue-600 rounded-lg text-white mr-2 ml-2;
+  .autosearch__wrapper {
+    @apply box-border relative w-full;
+  }
+  .autosearch__input {
+    @apply border-none bg-transparent
+     focus:bg-white focus:ring-2 focus:ring-gray-300 rounded
+     box-border text-base p-2 pr-7 w-full outline-none;
+  }
+  .autosearch__result__option {
+    @apply hover:bg-wa-light;
+  }
+  .autosearch__wrapper/* webkit solution */
+  ::-webkit-input-placeholder {
+    text-align: right;
+  }
+  /* mozilla solution */
+  .autosearch__wrapper input:-moz-placeholder {
+    text-align: right;
   }
 }

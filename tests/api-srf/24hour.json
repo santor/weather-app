@@ -1,0 +1,288 @@
+{
+  "formatted_date": "02.12.2020",
+  "date": "2020-12-02",
+  "24hours": [
+    {
+      "date": "2020-12-02T01:00:00+0100",
+      "values": [
+        {
+          "smb3": "-19"
+        },
+        {
+          "ttt": "0.7"
+        },
+        {
+          "fff": "4"
+        },
+        {
+          "ffx3": "13"
+        },
+        {
+          "ddd": "81"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "13"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T04:00:00+0100",
+      "values": [
+        {
+          "smb3": "-19"
+        },
+        {
+          "ttt": "0.5"
+        },
+        {
+          "fff": "6"
+        },
+        {
+          "ffx3": "13"
+        },
+        {
+          "ddd": "41"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "4"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T07:00:00+0100",
+      "values": [
+        {
+          "smb3": "-19"
+        },
+        {
+          "ttt": "0.1"
+        },
+        {
+          "fff": "6"
+        },
+        {
+          "ffx3": "13"
+        },
+        {
+          "ddd": "61"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "11"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T10:00:00+0100",
+      "values": [
+        {
+          "smb3": "3"
+        },
+        {
+          "ttt": "0.6"
+        },
+        {
+          "fff": "7"
+        },
+        {
+          "ffx3": "15"
+        },
+        {
+          "ddd": "48"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "10"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T13:00:00+0100",
+      "values": [
+        {
+          "smb3": "3"
+        },
+        {
+          "ttt": "1.8"
+        },
+        {
+          "fff": "7"
+        },
+        {
+          "ffx3": "19"
+        },
+        {
+          "ddd": "33"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "6"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T16:00:00+0100",
+      "values": [
+        {
+          "smb3": "3"
+        },
+        {
+          "ttt": "1.0"
+        },
+        {
+          "fff": "7"
+        },
+        {
+          "ffx3": "19"
+        },
+        {
+          "ddd": "31"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "5"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T19:00:00+0100",
+      "values": [
+        {
+          "smb3": "3"
+        },
+        {
+          "ttt": "0.7"
+        },
+        {
+          "fff": "4"
+        },
+        {
+          "ffx3": "15"
+        },
+        {
+          "ddd": "12"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "8"
+        }
+      ]
+    },
+    {
+      "date": "2020-12-02T22:00:00+0100",
+      "values": [
+        {
+          "smb3": "-3"
+        },
+        {
+          "ttt": "0.0"
+        },
+        {
+          "fff": "4"
+        },
+        {
+          "ffx3": "13"
+        },
+        {
+          "ddd": "75"
+        },
+        {
+          "rr3": "0.0"
+        },
+        {
+          "pr3": "10"
+        }
+      ]
+    }
+  ],
+  "info": {
+    "id": 3073,
+    "name": {
+      "de": "Gümligen"
+    },
+    "plz": 3073
+  },
+  "type": "forecasts",
+  "units": {
+    "dd3": {
+      "name": "winddirection_10m_mean_3h",
+      "unit": "°"
+    },
+    "ddd": {
+      "name": "winddirection_10m_mean_1d",
+      "unit": "°"
+    },
+    "ff3": {
+      "name": "windspeed_10m_mean_3h",
+      "unit": "km/h"
+    },
+    "ffd": {
+      "name": "windspeed_10m_mean_1d",
+      "unit": "km/h"
+    },
+    "fff": {
+      "name": "windspeed_10m_mean_1h",
+      "unit": "km/h"
+    },
+    "ffx3": {
+      "name": "windspeed_10m_max_3h",
+      "unit": "km/h"
+    },
+    "fxd": {
+      "name": "windspeed_10m_max_1d",
+      "unit": "km/h"
+    },
+    "pr3": {
+      "name": "probrain_3h",
+      "unit": "%"
+    },
+    "prd": {
+      "name": "probrain_1d",
+      "unit": "%"
+    },
+    "rr3": {
+      "name": "precipitation_1.5m_sum_3h",
+      "unit": "mm"
+    },
+    "rsd": {
+      "name": "precipitation_1.5m_sum_1d",
+      "unit": "mm"
+    },
+    "smb3": {
+      "name": "symbol",
+      "unit": "code"
+    },
+    "smbd": {
+      "name": "symbol",
+      "unit": "code"
+    },
+    "ttn": {
+      "name": "temperature_2m_min",
+      "unit": "°C"
+    },
+    "ttt": {
+      "name": "temperature_2m_act",
+      "unit": "°C"
+    },
+    "ttx": {
+      "name": "temperature_2m_max",
+      "unit": "°C"
+    }
+  }
+}

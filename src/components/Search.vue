@@ -1,5 +1,6 @@
 <template>
   <div class="flex-Wrapper">
+    <!--todo check out with a screen reader if the label is necessary for accessability-->
     <label class="hidden" for="location-search">{{
       t('searchLocation')
     }}</label>
@@ -73,36 +74,7 @@
     },
   };
 </script>
-
 <style>
-  .autosearch__wrapper {
-    box-sizing: border-box;
-    position: relative;
-    text-align: left;
-    width: 100%;
-  }
-  .autosearch__input {
-    border: none;
-    background-color: transparent;
-    border-radius: 0.2em;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: 1em;
-    padding: 0.4em;
-    padding-right: 1.8em;
-    width: 100%;
-  }
-  .autosearch__input:focus {
-    background-color: #fff;
-  }
-  .autosearch__input--openDown {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-  }
-  .autosearch__input--openUp {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-  }
   .autosearch__loadingIndicator {
     -webkit-animation-name: pulse;
     animation-name: pulse;
@@ -110,7 +82,7 @@
     animation-duration: 1s;
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-    border: 2px solid #ccc;
+    border: 2px solid #111827;
     border-radius: 50%;
     box-sizing: border-box;
     display: inline-block;
@@ -161,9 +133,9 @@
     display: block;
     padding: 0.4em;
   }
-  .autosearch__result__option:hover {
+  /* .autosearch__result__option:hover {
     background-color: #d3d3d3;
-  }
+  } */
   @-webkit-keyframes pulse {
     0% {
       transform: scale(1);

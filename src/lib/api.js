@@ -73,7 +73,7 @@ class Api {
       );
     } catch (error) {
       console.log('[api.js] SRF API ' + error);
-      console.log('trying to load data from opne weather...');
+      console.log('trying to load data from open weather...');
       //fallback and try to get weather from open weather
       return await this._fetchOpenWeather(
         Api._openWeatherUrl(latitude, longitude)

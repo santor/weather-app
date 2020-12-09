@@ -1,5 +1,7 @@
 # Switzerland Weather
 
+An example with Vue.js 3 and Tailwindcss
+
 ## Project setup
 
 ```
@@ -30,12 +32,13 @@ https://developer.srgssr.ch/
 create an app
 with public api v2 SRG-SSR-PUBLIC-API-V2
 
-make a .env file from the .env.example
+create a .env file from the .env.example
 copy your consumer key and consumer secret to the .env variables
+optionally register at openweather.com as fallback
 
-## Design
+## Credits
 
-based on https://dribbble.com/shots/10979569-Card-weather from Irina Krotkova
+design based on https://dribbble.com/shots/10979569-Card-weather from Irina Krotkova
 
 ## Weather Icons
 
