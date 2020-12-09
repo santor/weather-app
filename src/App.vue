@@ -92,7 +92,6 @@
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
-            console.log(weather);
             if (weather.location) {
               locationName.value = weather.location;
             }

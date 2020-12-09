@@ -25,6 +25,7 @@ class Api {
     if (!Api.instance) {
       //maybe the token from the SRF API is already saved
       this.authToken = Store.getAuthToken();
+      Api.instance = this;
     }
     return Api.instance;
   }
@@ -34,8 +35,6 @@ class Api {
       .get(API_URL_SEARCH_LOCATION + searchTerm)
       .then((result) => result.data)
       .catch((error) => console.log(`Error searching location: ${error}`));
-
-    // console.log(json);
 
     return json.results.map((result) => ({
       id: result.id,
@@ -64,7 +63,7 @@ class Api {
     }
 
     try {
-      //if authToken not present, then ask first for token
+      //if authToken not present, then fetch first a token
       if (!this._isTokenValid()) {
         this.authToken = await this._fetchAndStoreAuthToken();
       }
@@ -112,7 +111,6 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
-      // console.log(json);
       Store.saveCurrentLocation(json.info.name.de);
       return {
         location: json.info.name.de,
@@ -165,7 +163,5 @@ class Api {
 }
 
 const instance = new Api();
-//can not change auth token, if I freeze the object
-// Object.freeze(instance);
 
 export default instance;
