@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.3.1",
+    "@trevoreyre/autocomplete-vue": "^2.2.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "focus-visible": "^5.2.0",

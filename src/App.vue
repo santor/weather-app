@@ -32,7 +32,6 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
-  import Store from '@/lib/store';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
@@ -49,11 +48,10 @@
     },
 
     setup() {
-      const { t } = useI18n(); // call `useI18n`, and spread `t` from  `useI18n` returning
+      const { t } = useI18n(); // for translations
       const errorMessage = ref('');
       const locationName = ref('');
       const currentWeather = reactive({
-        // location: '',
         iconCode: '',
         temperature: '',
         windSpeed: '',
@@ -72,18 +70,23 @@
         );
       };
 
-      //clear error when dismiss is emitted, so the error will not show anymore
+      //clear error when dismiss is emitted, so the error alert will be hidden
       const clearError = function() {
         errorMessage.value = '';
       };
-      onMounted(() => {
-        const coords = getLocation();
-        if (coords) {
-          getCurrentForecast(coords.latitude, coords.longitude);
-        } else {
+
+      onMounted(async () => {
+        //try to get the users location
+        getLocation();
+
+        //if not allowed, get the weather for the last known or default location
+        const permissionStatus = await navigator.permissions.query({
+          name: 'geolocation',
+        });
+        const noPermission = permissionStatus.state != 'granted';
+        if (noPermission) {
           getCurrentForecast();
         }
-        locationName.value = Store.getLastLocation();
       });
 
       function getCurrentForecast(lat, lon, location) {
@@ -93,24 +96,12 @@
             if (weather.location) {
               locationName.value = weather.location;
             }
-            // currentWeather.location = weather.location;
             currentWeather.iconCode = weather.iconCode;
             currentWeather.temperature = weather.temperature;
             currentWeather.windSpeed = weather.windSpeed;
             currentWeather.windDirection = weather.windDirection;
             currentWeather.precMm = weather.precMm;
             currentWeather.precProbability = weather.precProbability;
-            // currentWeather.location = weather.info.name.de;
-            // const currentHour = weather.current_hour[0];
-            // currentWeather.iconCode = currentHour.values[0].smb3;
-            // currentWeather.temperature = currentHour.values[1].ttt;
-            // currentWeather.windSpeed = currentHour.values[2].fff;
-            // currentWeather.windDirection = currentHour.values[4].ddd;
-            // currentWeather.precipitationMm = currentHour.values[5].rr3;
-            // currentWeather.precipitationProbablility =
-            //   currentHour.values[6].pr3;
-            // console.log(currentWeather);
-            // console.log(weather);
           })
           .catch((error) => {
             errorMessage.value = t('couldNotFetch');
@@ -120,18 +111,15 @@
 
       function getLocation() {
         if (navigator.geolocation) {
-          return navigator.geolocation.getCurrentPosition(
-            searchWeatherForPosition
-          );
-        } else {
-          console.log('Geolocation blocked');
-          return false;
+          navigator.geolocation.getCurrentPosition(searchWeatherForPosition);
         }
       }
 
       function searchWeatherForPosition(position) {
-        return position.coords;
+        const coords = position.coords;
+        getCurrentForecast(coords.latitude, coords.longitude);
       }
+
       return {
         t,
         currentWeather,

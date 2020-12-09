@@ -16,6 +16,8 @@
 
 <script>
   import VueAutosearch from 'vue-autosearch';
+  // import Autocomplete from '@trevoreyre/autocomplete-vue';
+  // import '@trevoreyre/autocomplete-vue/dist/style.css';
   import Api from '@/lib/api';
   import { useI18n } from 'vue-i18n';
 
