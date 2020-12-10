@@ -14,8 +14,12 @@
       </div>
     </header>
 
-    <main>
-      <Current />
+    <main class="flex flex-col justify-between">
+      <Current
+        v-if="currentWeather.temperature"
+        :temperature="currentWeather.temperature"
+        description="cloudy"
+      />
       <Daily />
     </main>
   </div>
@@ -52,12 +56,12 @@
       const errorMessage = ref('');
       const locationName = ref('');
       const currentWeather = reactive({
-        iconCode: '',
-        temperature: '',
-        windSpeed: '',
-        windDirection: '',
-        precMm: '',
-        precProbability: '',
+        iconCode: String,
+        temperature: Number,
+        windSpeed: Number,
+        windDirection: Number,
+        precMm: Number,
+        precProbability: Number,
       });
 
       const onLocationChange = (locationData) => {
@@ -92,6 +96,7 @@
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
+            console.log(weather);
             if (weather.location) {
               locationName.value = weather.location;
             }

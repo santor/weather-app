@@ -16,8 +16,6 @@
 
 <script>
   import VueAutosearch from 'vue-autosearch';
-  // import Autocomplete from '@trevoreyre/autocomplete-vue';
-  // import '@trevoreyre/autocomplete-vue/dist/style.css';
   import Api from '@/lib/api';
   import { useI18n } from 'vue-i18n';
 
@@ -27,6 +25,7 @@
       VueAutosearch,
     },
     emits: ['latLonChange'],
+
     data() {
       return {
         selectedOption: null,
@@ -34,6 +33,7 @@
         searchResults: null,
       };
     },
+
     methods: {
       searchFunction(searchTerm) {
         return new Promise((resolve) => {
@@ -47,7 +47,6 @@
 
           this.searchTimeout = setTimeout(async () => {
             this.searchResults = await Api.searchLocation(searchTerm);
-
             return resolve({
               result: this.searchResults,
             });
@@ -63,6 +62,7 @@
             (element) => element.id == value.id
           );
           this.$emit('latLonChange', geo);
+          // this.selectedOption = null;
         }
       },
     },

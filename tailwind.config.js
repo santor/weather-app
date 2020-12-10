@@ -28,6 +28,13 @@ module.exports = {
         '8': '8 8 0%',
         '9': '9 9 0%',
       },
+      fontSize: {
+        '11xl': '11rem',
+        '12xl': '12rem',
+      },
+      fontFamily: {
+        fjalla: ['Fjalla One'],
+      },
     },
   },
   variants: {
