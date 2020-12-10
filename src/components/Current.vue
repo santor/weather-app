@@ -1,7 +1,7 @@
 <template>
   <section class="relative w-96 text-right">
     <span
-      class="absolute bg-gray-200 w-40 h-40 -right-2 -top-1
+      class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
      rounded-full"
     ></span>
     <span class="text-11xl tracking-tight font-fjalla relative">{{
