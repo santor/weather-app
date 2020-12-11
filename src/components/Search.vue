@@ -62,7 +62,6 @@
             (element) => element.id == value.id
           );
           this.$emit('latLonChange', geo);
-          // this.selectedOption = null;
         }
       },
     },
@@ -135,9 +134,7 @@
     display: block;
     padding: 0.4em;
   }
-  /* .autosearch__result__option:hover {
-    background-color: #d3d3d3;
-  } */
+
   @-webkit-keyframes pulse {
     0% {
       transform: scale(1);

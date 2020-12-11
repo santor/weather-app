@@ -14,9 +14,9 @@
       </div>
     </header>
 
-    <main class="flex flex-col justify-between">
+    <main class="flex flex-col justify-around">
       <Current
-        v-if="currentWeather.temperature"
+        v-if="currentWeather.temperature != null"
         :temperature="currentWeather.temperature"
         description="cloudy"
       />
@@ -56,12 +56,12 @@
       const errorMessage = ref('');
       const locationName = ref('');
       const currentWeather = reactive({
-        iconCode: String,
-        temperature: Number,
-        windSpeed: Number,
-        windDirection: Number,
-        precMm: Number,
-        precProbability: Number,
+        iconCode: '',
+        temperature: null,
+        windSpeed: '',
+        windDirection: '',
+        precMm: '',
+        precProbability: '',
       });
 
       const onLocationChange = (locationData) => {
@@ -101,7 +101,7 @@
               locationName.value = weather.location;
             }
             currentWeather.iconCode = weather.iconCode;
-            currentWeather.temperature = weather.temperature;
+            currentWeather.temperature = parseInt(weather.temperature);
             currentWeather.windSpeed = weather.windSpeed;
             currentWeather.windDirection = weather.windDirection;
             currentWeather.precMm = weather.precMm;

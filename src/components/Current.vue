@@ -1,21 +1,31 @@
 <template>
-  <section class="relative w-96 text-right">
-    <span
-      class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
+  <div class="self-center flex flex-row">
+    <section class="relative text-right">
+      <span
+        class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
      rounded-full"
-    ></span>
-    <span class="text-11xl tracking-tight font-fjalla relative">{{
-      roundedTemperature
-    }}</span>
-    <span class="text-11xl font-fjalla relative right-8">
-      &deg;
-    </span>
-  </section>
-  <p>{{ description }}</p>
+      ></span>
+      <span class="text-11xl tracking-tight font-fjalla relative">{{
+        roundedTemperature
+      }}</span>
+      <span class="text-11xl font-fjalla relative right-8">
+        &deg;
+      </span>
+    </section>
+    <section>
+      <p>{{ date.time }}</p>
+      <h1>{{ date.day }}</h1>
+      <p class="">{{ description }}</p>
+    </section>
+  </div>
 </template>
 
 <script>
-  import { toRefs, computed } from 'vue';
+  import { toRefs, computed, reactive, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const zeroPad = (num) => String(num).padStart(2, '0');
+
   export default {
     name: 'Current',
     props: {
@@ -29,12 +39,56 @@
       },
     },
     setup(props) {
-      console.log(props);
+      const { t } = useI18n();
       const { temperature } = toRefs(props);
       const roundedTemperature = computed(() => Math.round(temperature.value));
+      const date = reactive({
+        time: '',
+        day: '',
+      });
+
+      let intervalId, timeoutId;
+      onMounted(() => {
+        //set initial time
+        const currentTime = updateTime();
+        const initialTimeout = (60 - currentTime.getSeconds()) * 1000;
+
+        timeoutId = setTimeout(() => {
+          //update after initialTimeout
+          updateTime();
+          intervalId = setInterval(() => {
+            //then update every minute
+            updateTime();
+          }, 60 * 1000);
+        }, initialTimeout);
+      });
+
+      onUnmounted(() => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+      });
+
+      function updateTime() {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes();
+        date.time = `${zeroPad(hours)}:${zeroPad(minutes)}`;
+
+        //day not set or midnight
+        if (!date.day || hours + minutes == 0) {
+          const currentDayNumber = currentTime.getDay();
+          date.day = t(`day_${currentDayNumber}`);
+        }
+        return currentTime;
+      }
 
       return {
         roundedTemperature,
+        date,
       };
     },
   };
