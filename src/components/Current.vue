@@ -1,6 +1,6 @@
 <template>
-  <div class="self-center flex flex-row">
-    <section class="relative text-right">
+  <div class="self-center flex flex-row justify-center w-full items-center">
+    <section class="relative text-right ml-4 mr-4">
       <span
         class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
      rounded-full"
@@ -12,10 +12,10 @@
         &deg;
       </span>
     </section>
-    <section>
-      <p>{{ date.time }}</p>
-      <h1>{{ date.day }}</h1>
-      <p class="">{{ description }}</p>
+    <section class="ml-4 mr-4 mb-4">
+      <p class="pt-2 pb-1">{{ date.time }}</p>
+      <h1 class="text-6xl font-bold">{{ date.day }}</h1>
+      <p class="pt-3 pb-2">{{ description }}</p>
     </section>
   </div>
 </template>

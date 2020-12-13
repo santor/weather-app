@@ -18,7 +18,7 @@
       <Current
         v-if="currentWeather.temperature != null"
         :temperature="currentWeather.temperature"
-        description="cloudy"
+        :description="currentWeather.description"
       />
       <Daily />
     </main>
@@ -36,8 +36,20 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
+  import weatherCodeMap from '@/assets/weather_code_map.json';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+
+  function getWeatherIconAndDescription(codeFromIcon) {
+    const item = weatherCodeMap.find((element) => element.code == codeFromIcon);
+    // console.log(item);
+    const { code_icon, description } = item;
+
+    return {
+      code_icon,
+      description,
+    };
+  }
 
   export default {
     name: 'App',
@@ -62,6 +74,7 @@
         windDirection: '',
         precMm: '',
         precProbability: '',
+        description: '',
       });
 
       const onLocationChange = (locationData) => {
@@ -96,16 +109,19 @@
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
-            console.log(weather);
+            // console.log(weather);
             if (weather.location) {
               locationName.value = weather.location;
             }
-            currentWeather.iconCode = weather.iconCode;
             currentWeather.temperature = parseInt(weather.temperature);
             currentWeather.windSpeed = weather.windSpeed;
             currentWeather.windDirection = weather.windDirection;
             currentWeather.precMm = weather.precMm;
             currentWeather.precProbability = weather.precProbability;
+            const codeFromIcon = weather.iconCode;
+            const codes = getWeatherIconAndDescription(codeFromIcon);
+            currentWeather.iconCode = codes.code_icon;
+            currentWeather.description = t(codes.description);
           })
           .catch((error) => {
             errorMessage.value = t('couldNotFetch');

@@ -111,6 +111,7 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
+      console.log(json);
       Store.saveCurrentLocation(json.info.name.de);
       return {
         location: json.info.name.de,
