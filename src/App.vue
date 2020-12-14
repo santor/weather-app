@@ -20,11 +20,11 @@
         :temperature="currentWeather.temperature"
         :description="currentWeather.description"
       />
-      <Daily />
+      <Daily :coordinates="coordinates" />
     </main>
   </div>
   <aside class="bg-white dark:bg-gray-800 flex-2 p-8 md:p-16 xl:p-32">
-    <Hourly />
+    <Hourly :coordinates="coordinates" />
   </aside>
 </template>
 
@@ -36,6 +36,7 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
+  import Store from '@/lib/store';
   import weatherCodeMap from '@/assets/weather_code_map.json';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -70,16 +71,18 @@
       const currentWeather = reactive({
         iconCode: '',
         temperature: null,
-        windSpeed: '',
-        windDirection: '',
-        precMm: '',
-        precProbability: '',
         description: '',
+      });
+      const coordinates = reactive({
+        latitude: '',
+        longitude: '',
       });
 
       const onLocationChange = (locationData) => {
         const sanitizedLocation = locationData.name.replace(/\([^()]*\)/g, '');
         locationName.value = sanitizedLocation;
+        coordinates.latitude = locationData.lat;
+        coordinates.longitude = locationData.lon;
         getCurrentForecast(
           locationData.lat,
           locationData.lon,
@@ -102,7 +105,11 @@
         });
         const noPermission = permissionStatus.state != 'granted';
         if (noPermission) {
-          getCurrentForecast();
+          const lat = Store.getLatitude();
+          const lon = Store.getLongitude();
+          coordinates.latitude = lat;
+          coordinates.longitude = lon;
+          getCurrentForecast(lat, lon);
         }
       });
 
@@ -114,10 +121,6 @@
               locationName.value = weather.location;
             }
             currentWeather.temperature = parseInt(weather.temperature);
-            currentWeather.windSpeed = weather.windSpeed;
-            currentWeather.windDirection = weather.windDirection;
-            currentWeather.precMm = weather.precMm;
-            currentWeather.precProbability = weather.precProbability;
             const codeFromIcon = weather.iconCode;
             const codes = getWeatherIconAndDescription(codeFromIcon);
             currentWeather.iconCode = codes.code_icon;
@@ -137,6 +140,8 @@
 
       function searchWeatherForPosition(position) {
         const coords = position.coords;
+        coordinates.latitude = coords.latitude;
+        coordinates.longitude = coords.longitude;
         getCurrentForecast(coords.latitude, coords.longitude);
       }
 
@@ -147,6 +152,7 @@
         clearError,
         onLocationChange,
         locationName,
+        coordinates,
       };
     },
   };

@@ -24,6 +24,7 @@
   import { toRefs, computed, reactive, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
 
+  //add leading zeros to the hours:minutes
   const zeroPad = (num) => String(num).padStart(2, '0');
 
   export default {
@@ -76,6 +77,7 @@
         const currentTime = new Date();
         const hours = currentTime.getHours();
         const minutes = currentTime.getMinutes();
+        //ex. 14:02 instead of 14:2
         date.time = `${zeroPad(hours)}:${zeroPad(minutes)}`;
 
         //day not set or midnight
@@ -93,5 +95,3 @@
     },
   };
 </script>
-
-<style></style>
