@@ -39,12 +39,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      textDecoration: ['focus-visible'],
       backgroundColor: ['active'],
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('tailwindcss-scroll-snap'),
-  ],
 };
