@@ -4,7 +4,9 @@
   >
     <ul class="flex flex-row justify-between">
       <li class="align-center hidden lg:block">
-        <div class="bg-gray-300 h-px w-16 relative top-1/2 ml-8 mr-8"></div>
+        <div
+          class="bg-gray-300 dark:bg-gray-700 h-px w-16 relative top-1/2 ml-8 mr-8"
+        ></div>
       </li>
       <li v-for="day in days" :key="day.dayOfWeek">
         <h2 class="text-lg">{{ t(`day_abbr_${day.dayOfWeek}`) }}</h2>
@@ -12,7 +14,9 @@
         <p class="font-bold">{{ day.tempAvg }}&deg;</p>
       </li>
       <li class="align-center hidden lg:block">
-        <div class="bg-gray-300 h-px w-16 relative top-1/2 ml-8 mr-8"></div>
+        <div
+          class="bg-gray-300 dark:bg-gray-700 h-px w-16 relative top-1/2 ml-8 mr-8"
+        ></div>
       </li>
     </ul>
   </section>

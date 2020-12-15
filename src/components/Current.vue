@@ -4,7 +4,7 @@
   >
     <section class="relative text-right ml-4 mr-4 mt-8 lg:mt-0">
       <span
-        class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
+        class="absolute bg-gray-200 dark:bg-gray-800 w-40 h-40 -right-2 -top-2
      rounded-full"
       ></span>
       <span class="text-11xl tracking-tight font-fjalla relative">{{

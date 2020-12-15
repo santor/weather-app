@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
-// const OPEN_WEATHER = process.env.OPEN_WEATHER_APP_ID;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
 const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
 
@@ -11,7 +10,7 @@ const URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
 const URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current';
 const URL_7_DAYS = 'https://api.srgssr.ch/forecasts/v1.0/weather/7day';
-// const URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
+const URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
 const URL_SEARCH_LOCATION =
   'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&origins=zipcode,gg25,district&searchText=';
 
@@ -41,6 +40,27 @@ class Api {
       lon: result.attrs.lon,
     }));
   }
+  async get24HoursForecast(latitude, longitude) {
+    this._checkNotNull(latitude, longitude, 'get24HoursForecast()');
+    if (!this._isTokenValid()) {
+      this.authToken = await this._fetchAndStoreAuthToken();
+    }
+    const url = Api._url(URL_24_HOURS, latitude, longitude);
+
+    const json = await axios(url, {
+      headers: {
+        Authorization: 'Bearer ' + this.authToken,
+      },
+    }).then((result) => result.data);
+
+    if (json) {
+      return json['24hours'].map((result) => ({
+        hours: new Date(result.date).getHours(),
+        temperature: parseInt(result.values[1].ttt),
+        iconCode: result.values[0].smb3,
+      }));
+    }
+  }
 
   async get7daysForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get7daysForecast()');
@@ -56,7 +76,6 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
-      console.log(json);
       return json['7days'].map((result) => ({
         dayOfWeek: Api._getDayFromDate(result.date),
         tempAvg: Api._getAverageFromStrings(
@@ -101,46 +120,13 @@ class Api {
       Store.saveCurrentLocation(location);
     }
 
-    // try {
-    //if authToken not present, then fetch first a token
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
     return await this._fetchCurrentForecast(
       Api._url(URL_CURRENT, latitude, longitude)
     );
-    // } catch (error) {
-    //   console.log('[api.js] SRF API ' + error);
-    //   console.log('trying to load data from open weather...');
-    //   //fallback and try to get weather from open weather
-    //   return await this._fetchOpenWeather(
-    //     Api._openWeatherUrl(latitude, longitude)
-    //   );
-    // }
   }
-
-  // async _fetchOpenWeather(url) {
-  //   const json = await axios.get(url).then((result) => result.data);
-
-  //   if (json) {
-  //     // console.log(result);
-  //     return {
-  //       // location: r.info.name.de,
-  //       iconCode: json.current.weather[0].icon, //different then the srf icon data
-  //       temperature: json.current.temp,
-  //       windSpeed: json.current.wind_speed,
-  //       windDirection: json.current.wind_deg,
-  //       precMm: json.minutely[0].precipitation,
-  //       precProbability: json.hourly[0].pop,
-  //     };
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
-  // static _openWeatherUrl(latitude, longitude) {
-  //   return `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${OPEN_WEATHER}`;
-  // }
 
   async _fetchCurrentForecast(url) {
     const json = await axios(url, {
