@@ -56,12 +56,20 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
+      console.log(json);
       return json['7days'].map((result) => ({
         dayOfWeek: Api._getDayFromDate(result.date),
-        tempAvg: parseInt((result.values.ttn + result.values.ttx) / 2),
-        iconCode: result.values.smbd,
+        tempAvg: Api._getAverageFromStrings(
+          result.values[0].ttn,
+          result.values[2].ttx
+        ),
+        iconCode: result.values[1].smbd,
       }));
     }
+  }
+
+  static _getAverageFromStrings(min, max) {
+    return parseInt((parseFloat(min) + parseFloat(max)) / 2);
   }
 
   static _getDayFromDate(dateString) {
@@ -99,7 +107,7 @@ class Api {
       this.authToken = await this._fetchAndStoreAuthToken();
     }
     return await this._fetchCurrentForecast(
-      Api.url(URL_CURRENT, latitude, longitude)
+      Api._url(URL_CURRENT, latitude, longitude)
     );
     // } catch (error) {
     //   console.log('[api.js] SRF API ' + error);

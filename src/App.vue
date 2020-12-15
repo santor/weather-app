@@ -20,11 +20,11 @@
         :temperature="currentWeather.temperature"
         :description="currentWeather.description"
       />
-      <Daily :coordinates="coordinates" />
+      <Daily :coordinates="coordinates" @fetchError="onErrorMessage" />
     </main>
   </div>
   <aside class="bg-white dark:bg-gray-800 flex-2 p-8 md:p-16 xl:p-32">
-    <Hourly :coordinates="coordinates" />
+    <Hourly :coordinates="coordinates" @fetchError="onErrorMessage" />
   </aside>
 </template>
 
@@ -83,6 +83,7 @@
         locationName.value = sanitizedLocation;
         coordinates.latitude = locationData.lat;
         coordinates.longitude = locationData.lon;
+        // console.log('onlocationchange ' + coordinates);
         getCurrentForecast(
           locationData.lat,
           locationData.lon,
@@ -93,6 +94,10 @@
       //clear error when dismiss is emitted, so the error alert will be hidden
       const clearError = function() {
         errorMessage.value = '';
+      };
+
+      const onErrorMessage = function(error) {
+        errorMessage.value = error;
       };
 
       onMounted(async () => {
@@ -109,6 +114,7 @@
           const lon = Store.getLongitude();
           coordinates.latitude = lat;
           coordinates.longitude = lon;
+          // console.log('nopermission ' + coordinates);
           getCurrentForecast(lat, lon);
         }
       });
@@ -127,7 +133,7 @@
             currentWeather.description = t(codes.description);
           })
           .catch((error) => {
-            errorMessage.value = t('couldNotFetch');
+            onErrorMessage(t('couldNotFetchCurrent'));
             console.log('[App.vue] ' + error);
           });
       }
@@ -142,6 +148,7 @@
         const coords = position.coords;
         coordinates.latitude = coords.latitude;
         coordinates.longitude = coords.longitude;
+        // console.log('searchWeatherForPosition' + coordinates);
         getCurrentForecast(coords.latitude, coords.longitude);
       }
 
@@ -150,6 +157,7 @@
         currentWeather,
         errorMessage,
         clearError,
+        onErrorMessage,
         onLocationChange,
         locationName,
         coordinates,

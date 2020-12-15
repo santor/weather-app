@@ -1,5 +1,10 @@
 export default {
-  couldNotFetch: 'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+  couldNotFetchCurrent:
+    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+  couldNotFetchDaily:
+    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+  couldNotFetchHourly:
+    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
   error: 'Fehler',
   searchLocation: 'Ort suchen',
   day_1: 'Montag',
