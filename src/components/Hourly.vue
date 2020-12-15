@@ -1,26 +1,30 @@
 <template>
   <ul
-    class="flex flex-row flex-wrap sm:flex-nowrap sm:flex-col sm:justify-center xl:justify-around min-h-full"
+    class="flex flex-row flex-wrap sm:flex-nowrap sm:flex-col justify-center xl:justify-between min-h-full"
   >
     <li
       v-for="hourly in allDay"
       :key="hourly.hours"
       :title="hourly.hours"
-      class="mt-4 mb-4 flex flex-col sm:flex-row sm:justify-center"
+      class="m-2 md:mt-4 md:mb-4 xl:m-0 flex flex-col sm:flex-row sm:justify-center xl:justify-end"
     >
-      <p class="hidden sm:inline-block text-lg text-right mr-4">
-        {{ hourly.hours }}
-      </p>
-      <i
-        :class="'wi-time-' + hourly.time"
-        class="wi text-3xl mb-1 self-center sm:hidden"
-      ></i>
+      <div class="self-center mb-1 sm:mb-0 sm:mr-4">
+        <i
+          :class="'wi-time-' + hourly.time"
+          class="wi text-lg sm:text-3xl mr-1 sm:hidden inline-block"
+        ></i>
+        <p class="inline-block text-sm sm:text-base md:text-lg text-right">
+          {{ hourly.hours }}
+        </p>
+      </div>
       <div class="ml-2 mr-2 sm:ml-0 sm:mr-0">
         <i
           :class="hourly.icon"
-          class="wi inline-block text-2xl md:text-3xl mr-2"
+          class="wi inline-block text-xl sm:text-2xl md:text-3xl mr-2"
         ></i>
-        <p class="inline-block text-xl md:text-2xl text-left font-bold">
+        <p
+          class="inline-block text-lg sm:text-xl md:text-2xl text-left sm:font-bold"
+        >
           {{ hourly.temperature }}&deg;
         </p>
       </div>
