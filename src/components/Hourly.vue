@@ -1,11 +1,17 @@
 <template>
-  <div>Hourly</div>
+  <section>
+    <ul>
+      <li v-for="hourly in allDay" :key="hourly.hours">
+        <p>{{ hourly.hours }}</p>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script>
   import { useI18n } from 'vue-i18n';
   import { toRefs, watchEffect, ref } from 'vue';
-  import { getWeatherIconName } from '../utils/utils.js';
+  import { getWeatherIconName, zeroPad } from '../utils/utils.js';
   import Api from '@/lib/api';
 
   export default {
@@ -24,10 +30,10 @@
     },
     emits: ['fetchError'],
 
-    etup(props, context) {
+    setup(props, context) {
       const { t } = useI18n();
       const coord = toRefs(props.coordinates);
-      const hours = ref([]);
+      const allDay = ref([]);
 
       watchEffect(() => {
         const lat = coord.latitude.value;
@@ -40,21 +46,21 @@
       function getHoursForecast(lat, lon) {
         Api.get24HoursForecast(lat, lon)
           .then((forecast) => {
-            forecast.icon = getWeatherIconName(forecast.icon);
-            hours.value = forecast;
+            forecast.forEach((item) => {
+              item.icon = getWeatherIconName(item.icon);
+              item.hours = `${zeroPad(item.hours)}:00`;
+            });
+            allDay.value = forecast;
           })
           .catch((error) => {
             context.emit('fetchError', t('couldNotFetchDaily'));
-            console.log('[Daily.vue] ' + error);
+            console.log('[Hourly.vue] ' + error);
           });
-        // console.log(response);
       }
 
       return {
-        hours,
+        allDay,
       };
     },
   };
 </script>
-
-<style></style>
