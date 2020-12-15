@@ -6,24 +6,26 @@
       v-for="hourly in allDay"
       :key="hourly.hours"
       :title="hourly.hours"
-      class="m-2 md:mt-4 md:mb-4 xl:m-0 flex flex-col sm:flex-row sm:justify-center xl:justify-end"
+      class="m-2 md:mt-4 md:mb-4 xl:m-0 flex flex-col sm:flex-row sm:justify-center"
     >
       <div class="self-center mb-1 sm:mb-0 sm:mr-4">
         <i
           :class="'wi-time-' + hourly.time"
           class="wi text-lg sm:text-3xl mr-1 sm:hidden inline-block"
         ></i>
-        <p class="inline-block text-sm sm:text-base md:text-lg text-right">
+        <p
+          class="inline-block text-sm sm:text-base md:text-lg xl:text-2xl text-right"
+        >
           {{ hourly.hours }}
         </p>
       </div>
       <div class="ml-2 mr-2 sm:ml-0 sm:mr-0">
         <i
           :class="hourly.icon"
-          class="wi inline-block text-xl sm:text-2xl md:text-3xl mr-2"
+          class="wi inline-block text-xl sm:text-2xl  md:text-3xl xl:text-4xl mr-2"
         ></i>
         <p
-          class="inline-block text-lg sm:text-xl md:text-2xl text-left sm:font-bold"
+          class="inline-block text-lg sm:text-xl sm:font-bold xl:font-normal md:text-2xl xl:text-3xl text-left "
         >
           {{ hourly.temperature }}&deg;
         </p>
