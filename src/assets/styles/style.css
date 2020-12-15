@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=auto');
-@import url('weather-icons.min.css');
+@import url('weather-icons.css');
 
 @layer base {
   ::selection {
