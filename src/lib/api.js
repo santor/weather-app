@@ -54,6 +54,7 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
+      console.log(json);
       return json['24hours'].map((result) => ({
         hours: new Date(result.date).getHours(),
         temperature: parseInt(result.values[1].ttt),
