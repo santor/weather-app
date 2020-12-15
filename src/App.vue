@@ -37,20 +37,9 @@
   import Search from '@/components/Search';
   import Api from '@/lib/api';
   import Store from '@/lib/store';
-  import weatherCodeMap from '@/assets/weather_code_map.json';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-
-  function getWeatherIconAndDescription(codeFromIcon) {
-    const item = weatherCodeMap.find((element) => element.code == codeFromIcon);
-    // console.log(item);
-    const { code_icon, description } = item;
-
-    return {
-      code_icon,
-      description,
-    };
-  }
+  import { getWeatherDescription } from './utils/utils.js';
 
   export default {
     name: 'App',
@@ -127,10 +116,8 @@
               locationName.value = weather.location;
             }
             currentWeather.temperature = parseInt(weather.temperature);
-            const codeFromIcon = weather.iconCode;
-            const codes = getWeatherIconAndDescription(codeFromIcon);
-            currentWeather.iconCode = codes.code_icon;
-            currentWeather.description = t(codes.description);
+            const description = getWeatherDescription(weather.iconCode);
+            currentWeather.description = t(description);
           })
           .catch((error) => {
             onErrorMessage(t('couldNotFetchCurrent'));

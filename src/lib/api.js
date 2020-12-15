@@ -57,7 +57,7 @@ class Api {
       return json['24hours'].map((result) => ({
         hours: new Date(result.date).getHours(),
         temperature: parseInt(result.values[1].ttt),
-        iconCode: result.values[0].smb3,
+        icon: result.values[0].smb3,
       }));
     }
   }

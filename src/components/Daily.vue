@@ -10,7 +10,7 @@
       </li>
       <li v-for="day in days" :key="day.dayOfWeek">
         <h2 class="text-lg">{{ t(`day_abbr_${day.dayOfWeek}`) }}</h2>
-        <i class="wi" :class="getWeatherIcon(day.iconCode)"></i>
+        <i class="wi" :class="getWeatherIconName(day.iconCode)"></i>
         <p class="font-bold">{{ day.tempAvg }}&deg;</p>
       </li>
       <li class="align-center hidden lg:block">
@@ -25,8 +25,8 @@
 <script>
   import { useI18n } from 'vue-i18n';
   import { toRefs, watchEffect, ref } from 'vue';
+  import { getWeatherIconName } from '../utils/utils.js';
   import Api from '@/lib/api';
-  import weatherCodeMap from '../assets/weather_code_map.json';
 
   export default {
     name: 'Daily',
@@ -70,15 +70,15 @@
         // console.log(response);
       }
 
-      function getWeatherIcon(srfIcon) {
-        const item = weatherCodeMap.find((element) => element.code == srfIcon);
+      // function getWeatherIcon(srfIcon) {
+      //   const item = weatherCodeMap.find((element) => element.code == srfIcon);
 
-        return item.code_icon;
-      }
+      //   return item.code_icon;
+      // }
       return {
         t,
         days,
-        getWeatherIcon,
+        getWeatherIconName,
       };
     },
   };

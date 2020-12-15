@@ -25,9 +25,7 @@
 <script>
   import { toRefs, computed, reactive, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
-
-  //add leading zeros to the hours:minutes
-  const zeroPad = (num) => String(num).padStart(2, '0');
+  import { zeroPad } from '../utils/utils.js';
 
   export default {
     name: 'Current',
