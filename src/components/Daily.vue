@@ -1,10 +1,18 @@
 <template>
-  <section class="">
-    <ul class="flex flex-row">
+  <section
+    class="ml-4 mr-4 sm:ml-8 sm:mr-8 lg:-ml-16 lg:-mr-16 xl:-ml-32 xl:-mr-32 2xl:mx-auto 2xl:w-10/12"
+  >
+    <ul class="flex flex-row justify-between">
+      <li class="align-center hidden lg:block">
+        <div class="bg-gray-300 h-px w-16 relative top-1/2 ml-8 mr-8"></div>
+      </li>
       <li v-for="day in days" :key="day.dayOfWeek">
         <h2 class="text-lg">{{ t(`day_abbr_${day.dayOfWeek}`) }}</h2>
         <i class="wi" :class="getWeatherIcon(day.iconCode)"></i>
         <p class="font-bold">{{ day.tempAvg }}&deg;</p>
+      </li>
+      <li class="align-center hidden lg:block">
+        <div class="bg-gray-300 h-px w-16 relative top-1/2 ml-8 mr-8"></div>
       </li>
     </ul>
   </section>

@@ -1,5 +1,7 @@
 <template>
-  <div class="self-center flex flex-row justify-center w-full items-center">
+  <div
+    class="flex-grow flex flex-col lg:flex-row justify-center mt-10 w-full items-center"
+  >
     <section class="relative text-right ml-4 mr-4">
       <span
         class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2

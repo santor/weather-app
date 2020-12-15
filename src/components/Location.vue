@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ locationName }}</h1>
+  <h1 class="text-lg">{{ locationName }}</h1>
 </template>
 
 <script>

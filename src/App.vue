@@ -8,13 +8,13 @@
       />
     </transition>
     <header>
-      <div class="flex flex-row justify-between">
+      <div class="flex flex-row justify-between h-10">
         <Location class="self-center" :locationName="locationName" />
         <Search @latLonChange="onLocationChange" />
       </div>
     </header>
 
-    <main class="flex flex-col justify-around">
+    <main class="flex flex-col justify-end -mt-10 h-full">
       <Current
         v-if="currentWeather.temperature != null"
         :temperature="currentWeather.temperature"
