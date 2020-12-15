@@ -14,7 +14,7 @@
       </div>
     </header>
 
-    <main class="flex flex-col justify-end -mt-10 h-full">
+    <main class="flex flex-col justify-end min-h-full">
       <Current
         v-if="currentWeather.temperature != null"
         :temperature="currentWeather.temperature"

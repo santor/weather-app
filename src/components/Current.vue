@@ -2,7 +2,7 @@
   <div
     class="flex-grow flex flex-col lg:flex-row justify-center mt-10 w-full items-center"
   >
-    <section class="relative text-right ml-4 mr-4">
+    <section class="relative text-right ml-4 mr-4 mt-8 lg:mt-0">
       <span
         class="absolute bg-gray-200 w-40 h-40 -right-2 -top-2
      rounded-full"
