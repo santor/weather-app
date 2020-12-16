@@ -4,7 +4,7 @@ A weather forecast app example for Switzerland, with Vue.js 3 and Tailwind css.
 
 Demo: [https://santor.github.io/weather-app/](https://santor.github.io/weather-app/)
 
-## Initial setup
+## Setup
 
 To be able to use the SRF Weather-API, first you have to register at https://developer.srgssr.ch/ and create an app with public api v2 SRG-SSR-PUBLIC-API-V2.
 
