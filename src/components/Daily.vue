@@ -67,14 +67,8 @@
             context.emit('fetchError', t('couldNotFetchDaily'));
             console.log('[Daily.vue] ' + error);
           });
-        // console.log(response);
       }
 
-      // function getWeatherIcon(srfIcon) {
-      //   const item = weatherCodeMap.find((element) => element.code == srfIcon);
-
-      //   return item.code_icon;
-      // }
       return {
         t,
         days,
@@ -83,5 +77,3 @@
     },
   };
 </script>
-
-<style></style>

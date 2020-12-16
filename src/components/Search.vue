@@ -26,6 +26,7 @@
     },
     emits: ['latLonChange'],
 
+    //let as options API
     data() {
       return {
         selectedOption: null,

@@ -7,6 +7,7 @@
     <div
       @click="$emit('dismiss')"
       class="cursor-pointer text-red-500 rounded-full bg-white mr-3"
+      data-test="error-dismiss"
     >
       <svg
         width="1.8em"
@@ -27,7 +28,7 @@
       </svg>
     </div>
     <!-- message -->
-    <div class="text-white max-w-lg ">
+    <div class="text-white max-w-lg" data-test="error-message">
       {{ message }}
     </div>
   </div>
