@@ -1,8 +1,16 @@
 # Switzerland Weather
 
-An example with Vue.js 3 and Tailwindcss
+A weather forecast app example for Switzerland, with Vue.js 3 and Tailwind css.
 
-## Project setup
+Demo: [https://santor.github.io/weather-app/](https://santor.github.io/weather-app/)
+
+## Initial setup
+
+To be able to use the SRF Weather-API, first you have to register at https://developer.srgssr.ch/ and create an app with public api v2 SRG-SSR-PUBLIC-API-V2.
+
+Rename the `.env.example` file to `.env` in the project root folder and copy your `CONSUMER_KEY` and `CONSUMER_SECRET` from the SRF API into it.
+
+## Install packages
 
 ```
 yarn install
@@ -26,26 +34,16 @@ yarn build
 yarn test
 ```
 
-### register at
+### Deploy to santor.github.io/weather-app/
 
-https://developer.srgssr.ch/
-create an app
-with public api v2 SRG-SSR-PUBLIC-API-V2
+```
+yarn deploy
+```
 
-create a .env file from the .env.example
-copy your consumer key and consumer secret to the .env variables
-optionally register at openweather.com as fallback
+###
 
 ## Credits
 
-design based on https://dribbble.com/shots/10979569-Card-weather from Irina Krotkova
-
-## Weather Icons
-
-from https://github.com/erikflowers/weather-icons
-
-design: The icon designs are originally by Lukas Bischoff.
-
-Mapping for icons from: https://github.com/baerengraben/iobroker.swiss-weather-api
-
-<div>Search icon made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+- based on a [design](https://dribbble.com/shots/10979569-Card-weather) from Irina Krotkova
+- weather icons from [https://github.com/erikflowers/weather-icons](https://github.com/erikflowers/weather-icons)
+- mapping for the icons from [https://github.com/baerengraben/iobroker.swiss-weather-api](https://github.com/baerengraben/iobroker.swiss-weather-api)
