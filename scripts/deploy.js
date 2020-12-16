@@ -13,7 +13,7 @@ const fs = require('fs');
     await execa('git', ['--work-tree', folderName, 'commit', '-m', 'deploy']);
     console.log('Pushing to github deploy branch...');
     await execa('git', ['push', 'origin', 'HEAD:deploy', '--force']);
-    await execa('del', ['-r', folderName]);
+    await execa('rm', ['-r', folderName]);
     await execa('git', ['checkout', '-f', 'main']);
     await execa('git', ['branch', '-D', 'deploy']);
     console.log('Successfully deployed, check your settings');
