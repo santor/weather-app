@@ -51,7 +51,7 @@ export default class Store {
   /**
    * Get value from the local store
    * @param {string} key Key in the local storage
-   * @returns {string | null} The string value stored or null
+   * @returns {string | null} The stored string value or null
    */
   static _checkValue(key) {
     if (localStorage.getItem(key)) {

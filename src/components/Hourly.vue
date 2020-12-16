@@ -77,7 +77,6 @@
               item.hours = `${zeroPad(item.hours)}:00`;
               item.time = parseInt(item.hours) % 12;
             });
-            console.log(forecast);
             allDay.value = forecast;
           })
           .catch((error) => {

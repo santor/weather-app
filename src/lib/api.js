@@ -4,7 +4,7 @@ import axios from 'axios';
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const ENCODED_KEY = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`); // encoded key works
-const EXPIRE_THRESHOLD = 20; //make expire 20 seconds earlier
+const EXPIRE_THRESHOLD = 20; //expire 20 seconds earlier
 
 const URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
@@ -171,7 +171,7 @@ class Api {
     if (json) {
       //object destructuring
       const { access_token, issued_at, expires_in } = json;
-      //save them
+
       Store.saveAuthToken(access_token, issued_at, expires_in);
 
       return access_token;
