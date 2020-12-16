@@ -1,4 +1,4 @@
-import weatherCodeMap from '../assets/weather_code_map.json';
+import weatherCodeMap from './weather_code_map.json';
 
 function getWeatherIconName(iconCode) {
   const item = weatherCodeMap.find((element) => element.code == iconCode);

@@ -36,7 +36,7 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
-  import Store from '@/lib/store';
+  import LocalStore from '@/lib/local_store';
   import { onMounted, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { getWeatherDescription } from './utils/utils.js';
@@ -99,8 +99,8 @@
         });
         const noPermission = permissionStatus.state != 'granted';
         if (noPermission) {
-          const lat = Store.getLatitude();
-          const lon = Store.getLongitude();
+          const lat = LocalStore.getLatitude();
+          const lon = LocalStore.getLongitude();
           coordinates.latitude = lat;
           coordinates.longitude = lon;
           // console.log('nopermission ' + coordinates);

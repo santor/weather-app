@@ -9,10 +9,11 @@
       class="m-2 md:mt-4 md:mb-4 xl:m-0 flex flex-col sm:flex-row sm:justify-center"
     >
       <div class="self-center mb-1 sm:mb-0 sm:mr-4">
-        <i
+        <!-- Hmm better without the clock icons -->
+        <!-- <i
           :class="'wi-time-' + hourly.time"
           class="wi text-lg sm:text-3xl mr-1 sm:hidden inline-block"
-        ></i>
+        ></i> -->
         <p
           class="inline-block text-sm sm:text-base md:text-lg xl:text-2xl text-right"
         >

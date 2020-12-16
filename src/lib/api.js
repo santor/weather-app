@@ -1,4 +1,4 @@
-import Store from './store.js';
+import LocalStore from './local_store.js';
 import axios from 'axios';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
@@ -19,7 +19,7 @@ class Api {
   constructor() {
     if (!Api.instance) {
       //maybe the token from the SRF API is already saved
-      this.authToken = Store.getAuthToken();
+      this.authToken = LocalStore.getAuthToken();
       Api.instance = this;
     }
     return Api.instance;
@@ -43,7 +43,7 @@ class Api {
   async get24HoursForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get24HoursForecast()');
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndStoreAuthToken();
+      this.authToken = await this._fetchAndLocalStoreAuthToken();
     }
     const url = Api._url(URL_24_HOURS, latitude, longitude);
 
@@ -65,7 +65,7 @@ class Api {
   async get7daysForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get7daysForecast()');
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndStoreAuthToken();
+      this.authToken = await this._fetchAndLocalStoreAuthToken();
     }
     const url = Api._url(URL_7_DAYS, latitude, longitude);
 
@@ -114,14 +114,14 @@ class Api {
   async getCurrentForecast(latitude, longitude, location) {
     this._checkNotNull(latitude, longitude, 'getCurrentForecast()');
 
-    Store.saveCurrentCoordinates(latitude, longitude);
+    LocalStore.saveCurrentCoordinates(latitude, longitude);
 
     if (location) {
-      Store.saveCurrentLocation(location);
+      LocalStore.saveCurrentLocation(location);
     }
 
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndStoreAuthToken();
+      this.authToken = await this._fetchAndLocalStoreAuthToken();
     }
     return await this._fetchCurrentForecast(
       Api._url(URL_CURRENT, latitude, longitude)
@@ -136,7 +136,7 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
-      Store.saveCurrentLocation(json.info.name.de);
+      LocalStore.saveCurrentLocation(json.info.name.de);
       return {
         location: json.info.name.de,
         iconCode: json.current_hour[0].values[0].smb3,
@@ -154,13 +154,13 @@ class Api {
   }
 
   _notExpired() {
-    const issued = Store.getAuthIssuedAt();
-    const expire = Store.getAuthExpiresIn();
+    const issued = LocalStore.getAuthIssuedAt();
+    const expire = LocalStore.getAuthExpiresIn();
     const currentTime = new Date().getTime();
     return currentTime < issued + expire - EXPIRE_THRESHOLD;
   }
 
-  async _fetchAndStoreAuthToken() {
+  async _fetchAndLocalStoreAuthToken() {
     const json = await axios(URL_AUTH, {
       method: 'POST',
       headers: {
@@ -172,7 +172,7 @@ class Api {
       //object destructuring
       const { access_token, issued_at, expires_in } = json;
 
-      Store.saveAuthToken(access_token, issued_at, expires_in);
+      LocalStore.saveAuthToken(access_token, issued_at, expires_in);
 
       return access_token;
     } else {

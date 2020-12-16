@@ -6,9 +6,9 @@ Demo: [https://santor.github.io/weather-app/](https://santor.github.io/weather-a
 
 ## Setup
 
-To be able to use the SRF Weather-API, first you have to register at https://developer.srgssr.ch/ and create an app with public api v2 SRG-SSR-PUBLIC-API-V2.
+To be able to use the SRG SSR Weather-API, first you have to register at https://developer.srgssr.ch/ and create an app with public api v2 SRG-SSR-PUBLIC-API-V2.
 
-Rename the `.env.example` file to `.env` in the project root folder and copy your `CONSUMER_KEY` and `CONSUMER_SECRET` from the SRF API into it.
+Rename the `.env.example` file to `.env` in the project root folder and copy your `CONSUMER_KEY` and `CONSUMER_SECRET` from the created app under your account.
 
 #### Install packages
 
