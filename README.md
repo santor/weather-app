@@ -10,37 +10,29 @@ To be able to use the SRF Weather-API, first you have to register at https://dev
 
 Rename the `.env.example` file to `.env` in the project root folder and copy your `CONSUMER_KEY` and `CONSUMER_SECRET` from the SRF API into it.
 
-## Install packages
+#### Install packages
 
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 
 ```
 yarn build
 ```
 
-### Run tests
+#### Run tests
 
 ```
 yarn test
 ```
-
-### Deploy to santor.github.io/weather-app/
-
-```
-yarn deploy
-```
-
-###
 
 ## Credits
 
