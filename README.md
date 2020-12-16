@@ -44,6 +44,7 @@ yarn deploy
 
 ## Credits
 
+- location search from [https://api3.geo.admin.ch/](https://api3.geo.admin.ch/)
 - based on a [design](https://dribbble.com/shots/10979569-Card-weather) from Irina Krotkova
 - weather icons from [https://github.com/erikflowers/weather-icons](https://github.com/erikflowers/weather-icons)
 - mapping for the icons from [https://github.com/baerengraben/iobroker.swiss-weather-api](https://github.com/baerengraben/iobroker.swiss-weather-api)
