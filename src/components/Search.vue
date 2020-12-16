@@ -38,8 +38,9 @@
     methods: {
       searchFunction(searchTerm) {
         return new Promise((resolve) => {
-          if (this.searchTimeout) clearTimeout(this.searchTimeout);
-
+          if (this.searchTimeout) {
+            clearTimeout(this.searchTimeout);
+          }
           if (searchTerm.length < 2) {
             return resolve({
               message: '',
