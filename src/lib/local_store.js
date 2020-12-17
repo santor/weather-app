@@ -12,21 +12,21 @@ export default class LocalStore {
   /**
    * @returns {string | false} The auth token or null if it's not found
    */
-  static getAuthToken = () => LocalStore._checkValue(AUTH_KEY);
-  static getAuthIssuedAt = () => LocalStore._checkValue(AUTH_ISSUED_AT);
-  static getAuthExpiresIn = () => LocalStore._checkValue(AUTH_EXPIRES_IN);
+  static getAuthToken = () => LocalStore._loadValue(AUTH_KEY);
+  static getAuthIssuedAt = () => LocalStore._loadValue(AUTH_ISSUED_AT);
+  static getAuthExpiresIn = () => LocalStore._loadValue(AUTH_EXPIRES_IN);
 
   static getLastLocation = () =>
-    LocalStore._checkValue(CURR_LOCATION)
-      ? LocalStore._checkValue(CURR_LOCATION)
+    LocalStore._loadValue(CURR_LOCATION)
+      ? LocalStore._loadValue(CURR_LOCATION)
       : DEFAULT_LOCATION;
   static getLatitude = () =>
-    LocalStore._checkValue(CURR_LATITUDE)
-      ? LocalStore._checkValue(CURR_LATITUDE)
+    LocalStore._loadValue(CURR_LATITUDE)
+      ? LocalStore._loadValue(CURR_LATITUDE)
       : DEFAULT_LATITUDE;
   static getLongitude = () =>
-    LocalStore._checkValue(CURR_LONGITUDE)
-      ? LocalStore._checkValue(CURR_LONGITUDE)
+    LocalStore._loadValue(CURR_LONGITUDE)
+      ? LocalStore._loadValue(CURR_LONGITUDE)
       : DEFAULT_LONGITUDE;
 
   static saveAuthToken(accessToken, issuedAtSec, expiresInSec) {
@@ -53,7 +53,7 @@ export default class LocalStore {
    * @param {string} key Key in the local storage
    * @returns {string | null} The stored string value or null
    */
-  static _checkValue(key) {
+  static _loadValue(key) {
     if (localStorage.getItem(key)) {
       try {
         return localStorage.getItem(key);
