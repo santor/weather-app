@@ -77,7 +77,8 @@
         return Api.get24HoursForecast(lat, lon)
           .then((forecast) => {
             forecast.forEach((item) => {
-              item.icon = getWeatherIconName(item.icon);
+              const convertedIcon = getWeatherIconName(item.icon);
+              item.icon = convertedIcon ? convertedIcon : item.icon;
               item.hours = `${zeroPad(item.hours)}:00`;
               item.time = parseInt(item.hours) % 12;
             });

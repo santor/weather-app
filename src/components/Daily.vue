@@ -8,10 +8,14 @@
           class="bg-gray-300 dark:bg-gray-700 h-px w-16 2xl:w-12 relative top-1/2 ml-8 mr-8"
         ></div>
       </li>
-      <li v-for="day in days" :key="day.dayOfWeek">
-        <h2 class="text-lg">{{ t(`day_abbr_${day.dayOfWeek}`) }}</h2>
+      <li v-for="day in days" :key="day.dayOfWeek" data-test="day">
+        <h2 class="text-lg" :data-test="`day-${day.dayOfWeek}`">
+          {{ t(`day_abbr_${day.dayOfWeek}`) }}
+        </h2>
         <i class="wi text-lg" :class="getWeatherIconName(day.iconCode)"></i>
-        <p class="font-bold">{{ day.tempAvg }}&deg;</p>
+        <p class="font-bold" :data-test="`temp-${day.dayOfWeek}`">
+          {{ day.tempAvg }}&deg;
+        </p>
       </li>
       <li class="align-center hidden lg:block">
         <div
@@ -58,8 +62,8 @@
         }
       });
 
-      function getSevenDayForecast(lat, lon) {
-        Api.get7daysForecast(lat, lon)
+      async function getSevenDayForecast(lat, lon) {
+        return Api.get7daysForecast(lat, lon)
           .then((weather) => {
             days.value = weather;
           })
@@ -73,6 +77,7 @@
         t,
         days,
         getWeatherIconName,
+        getSevenDayForecast,
       };
     },
   };

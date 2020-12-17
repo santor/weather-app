@@ -20,7 +20,8 @@ describe('Hourly.vue', () => {
   beforeAll(() => {
     Api.get24HoursForecast = jest
       .fn()
-      .mockReturnValueOnce(
+      .mockReturnValueOnce(Promise.reject(Error('Test error')))
+      .mockReturnValue(
         Promise.resolve([
           { hours: 1, temperature: 0, icon: '-19' },
           { hours: 4, temperature: 0, icon: '-19' },
@@ -31,28 +32,34 @@ describe('Hourly.vue', () => {
           { hours: 19, temperature: 0, icon: '3' },
           { hours: 22, temperature: 0, icon: '-3' },
         ])
-      )
-      .mockReturnValueOnce(Promise.reject(Error('Network error')));
+      );
   });
 
-  test('loads correctly', async () => {
+  beforeEach(async () => {
     await wrapper.vm.getHoursForecast();
+  });
+
+  test('emits fetchError', () => {
+    expect(wrapper.emitted('fetchError')).toBeTruthy();
+  });
+
+  test('displays all', () => {
     const hourly = wrapper.findAll('[data-test="hourly"]');
     expect(hourly).toHaveLength(8);
-
-    const thirdElement = hourly[2];
-    expect(thirdElement.text()).toEqual('07:000°');
-
-    const hour = wrapper.find('[data-test="hour-13:00"]');
-    expect(hour.text()).toEqual('13:00');
-
-    const temp = wrapper.find('[data-test="temperature-16:00"]');
-    expect(temp.text()).toEqual('1°');
   });
 
-  test('emits fetchError', async () => {
-    await wrapper.vm.getHoursForecast();
+  test('is seven a clock and zero degree', () => {
+    const thirdElement = wrapper.findAll('[data-test="hourly"]')[2];
+    expect(thirdElement.text()).toEqual('07:000°');
+  });
 
-    expect(wrapper.emitted('fetchError')).toBeTruthy();
+  test('is one a clock', () => {
+    const hour = wrapper.find('[data-test="hour-13:00"]');
+    expect(hour.text()).toEqual('13:00');
+  });
+
+  test('is one degree celsius', () => {
+    const temp = wrapper.find('[data-test="temperature-16:00"]');
+    expect(temp.text()).toEqual('1°');
   });
 });
