@@ -7,17 +7,19 @@
         class="absolute bg-gray-200 dark:bg-gray-800 w-40 h-40 -right-2 -top-2
      rounded-full"
       ></span>
-      <span class="text-11xl tracking-tight font-fjalla relative">{{
-        roundedTemperature
-      }}</span>
+      <span
+        class="text-11xl tracking-tight font-fjalla relative"
+        data-test="temperature"
+        >{{ roundedTemperature }}</span
+      >
       <span class="text-11xl font-fjalla relative right-8">
         &deg;
       </span>
     </section>
     <section class="ml-4 mr-4 mb-4">
-      <p class="pt-2 pb-1">{{ date.time }}</p>
-      <h1 class="text-6xl font-bold">{{ date.day }}</h1>
-      <p class="pt-3 pb-2">{{ description }}</p>
+      <p class="pt-2 pb-1" data-test="time">{{ date.time }}</p>
+      <h1 class="text-6xl font-bold" data-test="day">{{ date.day }}</h1>
+      <p class="pt-3 pb-2" data-test="description">{{ description }}</p>
     </section>
   </div>
 </template>

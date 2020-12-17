@@ -60,7 +60,7 @@ describe('Search.vue', () => {
       expect(search.result).toHaveLength(4);
     });
 
-    test('emits latitude and longitude change', async () => {
+    test('emits object on selection change', async () => {
       const value = {
         id: 1452,
         name: 'Muri (AG)',
