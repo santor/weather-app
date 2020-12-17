@@ -68,15 +68,14 @@
       });
 
       const onLocationChange = (locationData) => {
-        const sanitizedLocation = locationData.name.replace(/\([^()]*\)/g, '');
-        locationName.value = sanitizedLocation;
+        locationName.value = locationData.name;
         coordinates.latitude = locationData.lat;
         coordinates.longitude = locationData.lon;
         // console.log('onlocationchange ' + coordinates);
         getCurrentForecast(
           locationData.lat,
           locationData.lon,
-          sanitizedLocation
+          locationData.name
         );
       };
 

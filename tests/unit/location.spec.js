@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import Location from '../../src/components/Location.vue';
+import Location from '@/components/Location.vue';
 
 describe('Location.vue', () => {
   //shallowMount() - component mounted without children
@@ -10,7 +10,7 @@ describe('Location.vue', () => {
   });
 
   test('has a h1 title', () => {
-    expect(wrapper.find('h1').exists()).toBe(true);
+    expect(wrapper.find('h1').exists()).toBeTruthy();
   });
 
   test('displays correct location name in the title', () => {
