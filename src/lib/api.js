@@ -43,15 +43,17 @@ class Api {
   async get24HoursForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get24HoursForecast()');
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndLocalStoreAuthToken();
+      this.authToken = await this._fetchAndStoreAuthToken();
     }
     const url = Api._url(URL_24_HOURS, latitude, longitude);
 
-    const json = await axios(url, {
-      headers: {
-        Authorization: 'Bearer ' + this.authToken,
-      },
-    }).then((result) => result.data);
+    const json = await axios
+      .get(url, {
+        headers: {
+          Authorization: 'Bearer ' + this.authToken,
+        },
+      })
+      .then((result) => result.data);
 
     if (json) {
       return json['24hours'].map((result) => ({
@@ -65,7 +67,7 @@ class Api {
   async get7daysForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get7daysForecast()');
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndLocalStoreAuthToken();
+      this.authToken = await this._fetchAndStoreAuthToken();
     }
     const url = Api._url(URL_7_DAYS, latitude, longitude);
 
@@ -88,7 +90,10 @@ class Api {
   }
 
   static _getAverageFromStrings(min, max) {
-    return parseInt((parseFloat(min) + parseFloat(max)) / 2);
+    let integer = parseInt((parseFloat(min) + parseFloat(max)) / 2);
+    // correct the value if it is -0
+    integer = integer === 0 ? 0 : integer;
+    return integer;
   }
 
   static _getDayFromDate(dateString) {
@@ -121,7 +126,7 @@ class Api {
     }
 
     if (!this._isTokenValid()) {
-      this.authToken = await this._fetchAndLocalStoreAuthToken();
+      this.authToken = await this._fetchAndStoreAuthToken();
     }
     return await this._fetchCurrentForecast(
       Api._url(URL_CURRENT, latitude, longitude)
@@ -160,7 +165,7 @@ class Api {
     return currentTime < issued + expire - EXPIRE_THRESHOLD;
   }
 
-  async _fetchAndLocalStoreAuthToken() {
+  async _fetchAndStoreAuthToken() {
     const json = await axios(URL_AUTH, {
       method: 'POST',
       headers: {
