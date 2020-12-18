@@ -2,6 +2,7 @@
   <div class="content flex-5 p-8 md:p-16 xl:p-32">
     <transition name="fade">
       <ErrorAlert
+        data-test="error-alert"
         v-if="errorMessage != ''"
         @dismiss="clearError"
         :message="errorMessage"
@@ -9,13 +10,18 @@
     </transition>
     <header>
       <div class="flex flex-row justify-between h-10">
-        <Location class="self-center" :locationName="locationName" />
+        <Location
+          data-test="location"
+          class="self-center"
+          :locationName="locationName"
+        />
         <Search @latLonChange="onLocationChange" />
       </div>
     </header>
 
     <main class="flex flex-col justify-end min-h-full -mt-10">
       <Current
+        data-test="current"
         v-if="currentWeather.temperature != null"
         :temperature="currentWeather.temperature"
         :description="currentWeather.description"
@@ -69,15 +75,16 @@
 
       const onLocationChange = (locationData) => {
         locationName.value = locationData.name;
-        coordinates.latitude = locationData.lat;
-        coordinates.longitude = locationData.lon;
-        // console.log('onlocationchange ' + coordinates);
-        getCurrentForecast(
-          locationData.lat,
-          locationData.lon,
-          locationData.name
-        );
+        const lat = locationData.lat;
+        const lon = locationData.lon;
+        updateCoordinates(lat, lon);
+        getCurrentForecast(lat, lon, locationData.name);
       };
+
+      function updateCoordinates(lat, lon) {
+        coordinates.latitude = lat;
+        coordinates.longitude = lon;
+      }
 
       //clear error when dismiss is emitted, so the error alert will be hidden
       const clearError = function() {
@@ -92,7 +99,7 @@
         //try to get the users location
         getLocation();
 
-        //if not allowed, get the weather for the last known or default location
+        //if not allowed, get the weather for the last known location
         const permissionStatus = await navigator.permissions.query({
           name: 'geolocation',
         });
@@ -100,9 +107,7 @@
         if (noPermission) {
           const lat = LocalStore.getLatitude();
           const lon = LocalStore.getLongitude();
-          coordinates.latitude = lat;
-          coordinates.longitude = lon;
-          // console.log('nopermission ' + coordinates);
+          updateCoordinates(lat, lon);
           getCurrentForecast(lat, lon);
         }
       });
@@ -110,7 +115,6 @@
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
-            // console.log(weather);
             if (weather.location) {
               locationName.value = weather.location;
             }
@@ -132,10 +136,10 @@
 
       function searchWeatherForPosition(position) {
         const coords = position.coords;
-        coordinates.latitude = coords.latitude;
-        coordinates.longitude = coords.longitude;
-        // console.log('searchWeatherForPosition' + coordinates);
-        getCurrentForecast(coords.latitude, coords.longitude);
+        const lat = coords.latitude;
+        const lon = coords.longitude;
+        updateCoordinates(lat, lon);
+        getCurrentForecast(lat, lon);
       }
 
       return {
