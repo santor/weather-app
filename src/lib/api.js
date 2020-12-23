@@ -8,7 +8,7 @@ const EXPIRE_THRESHOLD = 20; //expire 20 seconds earlier
 
 const URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
-const URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current';
+const URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current3';
 const URL_7_DAYS = 'https://api.srgssr.ch/forecasts/v1.0/weather/7day';
 const URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
 const URL_SEARCH_LOCATION =
@@ -40,6 +40,7 @@ class Api {
       lon: result.attrs.lon,
     }));
   }
+
   async get24HoursForecast(latitude, longitude) {
     this._checkNotNull(latitude, longitude, 'get24HoursForecast()');
     if (!this._isTokenValid()) {

@@ -1,12 +1,13 @@
 import App from '@/App';
 import { mount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
+import store from '@/store/index.js';
 import Api from '@/lib/api';
 
 describe('App.vue', () => {
   const wrapper = mount(App, {
     global: {
-      plugins: [i18n],
+      plugins: [i18n, store],
     },
   });
   describe('Errors', () => {
@@ -19,12 +20,8 @@ describe('App.vue', () => {
     });
 
     test('removes error alert', async () => {
-      wrapper.vm.clearError();
+      store.commit('error/clearError');
       await wrapper.vm.$nextTick();
-
-      //error message empty
-      const errorMessage = wrapper.vm.errorMessage;
-      expect(errorMessage).toBe('');
 
       //error component removed
       const errorExists = wrapper.find('[data-test="error-alert"]').exists();

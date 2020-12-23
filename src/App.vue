@@ -1,12 +1,7 @@
 <template>
   <div class="content flex-5 p-8 md:p-16 xl:p-32">
     <transition name="fade">
-      <ErrorAlert
-        data-test="error-alert"
-        v-if="errorMessage != ''"
-        @dismiss="clearError"
-        :message="errorMessage"
-      />
+      <ErrorAlert data-test="error-alert" v-if="hasError" />
     </transition>
     <header>
       <div class="flex flex-row justify-between h-10">
@@ -43,8 +38,9 @@
   import Search from '@/components/Search';
   import Api from '@/lib/api';
   import LocalStore from '@/lib/local_store';
-  import { onMounted, reactive, ref } from 'vue';
+  import { onMounted, reactive, ref, computed } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { useStore } from 'vuex';
   import { getWeatherDescription } from './utils/utils.js';
 
   export default {
@@ -61,7 +57,8 @@
 
     setup() {
       const { t } = useI18n(); // for translations
-      const errorMessage = ref('');
+      const store = useStore();
+      const hasError = computed(() => store.getters['error/hasError']);
       const locationName = ref('');
       const currentWeather = reactive({
         iconCode: '',
@@ -86,13 +83,8 @@
         coordinates.longitude = lon;
       }
 
-      //clear error when dismiss is emitted, so the error alert will be hidden
-      const clearError = function() {
-        errorMessage.value = '';
-      };
-
       const onErrorMessage = function(error) {
-        errorMessage.value = error;
+        store.commit('error/addError', error);
       };
 
       onMounted(async () => {
@@ -145,8 +137,7 @@
       return {
         t,
         currentWeather,
-        errorMessage,
-        clearError,
+        hasError,
         onErrorMessage,
         onLocationChange,
         locationName,

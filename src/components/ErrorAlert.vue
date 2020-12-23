@@ -5,7 +5,7 @@
   >
     <!-- icons -->
     <div
-      @click="$emit('dismiss')"
+      @click="dismiss"
       class="cursor-pointer text-red-500 rounded-full bg-white mr-3"
       data-test="error-dismiss"
     >
@@ -35,11 +35,24 @@
 </template>
 
 <script>
+  import { useStore } from 'vuex';
+  import { computed } from 'vue';
+
   export default {
     name: 'ErrorAlert',
-    props: {
-      message: String,
+
+    setup() {
+      const store = useStore();
+      const message = computed(() => store.state.error.errorMessage);
+
+      function dismiss() {
+        store.commit('error/clearError');
+      }
+
+      return {
+        message,
+        dismiss,
+      };
     },
-    emits: ['dismiss'],
   };
 </script>
