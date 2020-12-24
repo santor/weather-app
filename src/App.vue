@@ -5,11 +5,7 @@
     </transition>
     <header>
       <div class="flex flex-row justify-between h-10">
-        <Location
-          data-test="location"
-          class="self-center"
-          :locationName="locationName"
-        />
+        <Location data-test="location" class="self-center" />
         <Search @latLonChange="onLocationChange" />
       </div>
     </header>
@@ -37,8 +33,8 @@
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
   import Api from '@/lib/api';
-  import LocalStore from '@/lib/local_store';
-  import { onMounted, reactive, ref, computed } from 'vue';
+  import LocalStorage from '@/lib/local_storage';
+  import { onMounted, reactive, computed } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useStore } from 'vuex';
   import { getWeatherDescription } from './utils/utils.js';
@@ -59,7 +55,6 @@
       const { t } = useI18n(); // for translations
       const store = useStore();
       const hasError = computed(() => store.getters['error/hasError']);
-      const locationName = ref('');
       const currentWeather = reactive({
         iconCode: '',
         temperature: null,
@@ -71,7 +66,7 @@
       });
 
       const onLocationChange = (locationData) => {
-        locationName.value = locationData.name;
+        store.commit('location/setLocationName', locationData.name);
         const lat = locationData.lat;
         const lon = locationData.lon;
         updateCoordinates(lat, lon);
@@ -97,8 +92,8 @@
         });
         const noPermission = permissionStatus.state != 'granted';
         if (noPermission) {
-          const lat = LocalStore.getLatitude();
-          const lon = LocalStore.getLongitude();
+          const lat = LocalStorage.getLatitude();
+          const lon = LocalStorage.getLongitude();
           updateCoordinates(lat, lon);
           getCurrentForecast(lat, lon);
         }
@@ -107,9 +102,6 @@
       function getCurrentForecast(lat, lon, location) {
         Api.getCurrentForecast(lat, lon, location)
           .then((weather) => {
-            if (weather.location) {
-              locationName.value = weather.location;
-            }
             currentWeather.temperature = parseInt(weather.temperature);
             const description = getWeatherDescription(weather.iconCode);
             currentWeather.description = t(description);
@@ -140,7 +132,6 @@
         hasError,
         onErrorMessage,
         onLocationChange,
-        locationName,
         coordinates,
       };
     },

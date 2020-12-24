@@ -1,4 +1,4 @@
-import LocalStore from './local_store.js';
+import LocalStorage from './local_storage.js';
 import axios from 'axios';
 
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
@@ -8,7 +8,7 @@ const EXPIRE_THRESHOLD = 20; //expire 20 seconds earlier
 
 const URL_AUTH =
   'https://api.srgssr.ch/oauth/v1/accesstoken?grant_type=client_credentials';
-const URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current3';
+const URL_CURRENT = 'https://api.srgssr.ch/forecasts/v1.0/weather/current';
 const URL_7_DAYS = 'https://api.srgssr.ch/forecasts/v1.0/weather/7day';
 const URL_24_HOURS = 'https://api.srgssr.ch/forecasts/v1.0/weather/24hour';
 const URL_SEARCH_LOCATION =
@@ -19,7 +19,7 @@ class Api {
   constructor() {
     if (!Api.instance) {
       //maybe the token from the SRF API is already saved
-      this.authToken = LocalStore.getAuthToken();
+      this.authToken = LocalStorage.getAuthToken();
       Api.instance = this;
     }
     return Api.instance;
@@ -118,13 +118,14 @@ class Api {
    * @param {*} location name of the location
    */
   async getCurrentForecast(latitude, longitude, location) {
+    console.log(location);
     this._checkNotNull(latitude, longitude, 'getCurrentForecast()');
 
-    LocalStore.saveCurrentCoordinates(latitude, longitude);
+    LocalStorage.saveCurrentCoordinates(latitude, longitude);
 
-    if (location) {
-      LocalStore.saveCurrentLocation(location);
-    }
+    // if (location) {
+    //   LocalStorage.saveCurrentLocation(location);
+    // }
 
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
@@ -142,7 +143,7 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
-      LocalStore.saveCurrentLocation(json.info.name.de);
+      LocalStorage.saveCurrentLocation(json.info.name.de);
       return {
         location: json.info.name.de,
         iconCode: json.current_hour[0].values[0].smb3,
@@ -160,8 +161,8 @@ class Api {
   }
 
   _notExpired() {
-    const issued = LocalStore.getAuthIssuedAt();
-    const expire = LocalStore.getAuthExpiresIn();
+    const issued = LocalStorage.getAuthIssuedAt();
+    const expire = LocalStorage.getAuthExpiresIn();
     const currentTime = new Date().getTime();
     return currentTime < issued + expire - EXPIRE_THRESHOLD;
   }
@@ -178,7 +179,7 @@ class Api {
       //object destructuring
       const { access_token, issued_at, expires_in } = json;
 
-      LocalStore.saveAuthToken(access_token, issued_at, expires_in);
+      LocalStorage.saveAuthToken(access_token, issued_at, expires_in);
 
       return access_token;
     } else {

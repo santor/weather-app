@@ -3,14 +3,19 @@
 </template>
 
 <script>
+  import { computed } from 'vue';
+  import { useStore } from 'vuex';
+
   export default {
     name: 'Location',
 
-    props: {
-      locationName: {
-        type: String,
-        required: true,
-      },
+    setup() {
+      const store = useStore();
+      const locationName = computed(() => store.state.location.locationName);
+
+      return {
+        locationName,
+      };
     },
   };
 </script>

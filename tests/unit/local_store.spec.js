@@ -1,4 +1,4 @@
-import LocalStore from '@/lib/local_store';
+import LocalStore from '@/lib/local_storage';
 
 describe('local_store.js', () => {
   test('saves and loads auth token', () => {
