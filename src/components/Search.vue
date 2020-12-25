@@ -1,6 +1,6 @@
 <template>
   <div class="flex-Wrapper">
-    <!--todo check out with a screen reader if the label is necessary for accessability-->
+    <!-- TODO check out with a screen reader if the label is necessary for accessability-->
     <label class="hidden" for="location-search">{{
       t('searchLocation')
     }}</label>
@@ -10,36 +10,37 @@
       v-model="selectedOption"
       :searchFunction="searchFunction"
       :placeholder="t('searchLocation')"
-    />
+    >
+    </VueAutosearch>
   </div>
 </template>
 
 <script>
   import VueAutosearch from 'vue-autosearch';
-  import Api from '@/lib/api';
   import { useI18n } from 'vue-i18n';
+  import {
+    LOCATION_SET_BY_ID,
+    LOCATION_SEARCH,
+  } from '@/store/modules/location.js';
 
   export default {
     name: 'Search',
     components: {
       VueAutosearch,
     },
-    emits: ['latLonChange'],
 
-    //let as options API
     data() {
       return {
         selectedOption: null,
-        searchTimeout: null,
-        searchResults: null,
+        searchTimeoutId: null,
       };
     },
 
     methods: {
       searchFunction(searchTerm) {
         return new Promise((resolve) => {
-          if (this.searchTimeout) {
-            clearTimeout(this.searchTimeout);
+          if (this.searchTimeoutId) {
+            clearTimeout(this.searchTimeoutId);
           }
           if (searchTerm.length < 2) {
             return resolve({
@@ -47,10 +48,13 @@
             });
           }
 
-          this.searchTimeout = setTimeout(async () => {
-            this.searchResults = await Api.searchLocation(searchTerm);
+          this.searchTimeoutId = setTimeout(async () => {
+            // wait until executes
+            //so the state locationSuggestions will not be empty
+            // if there are some results
+            await this.$store.dispatch(LOCATION_SEARCH, searchTerm);
             return resolve({
-              result: this.searchResults,
+              result: this.$store.state.location.suggestions,
             });
           }, 300);
         });
@@ -59,11 +63,8 @@
 
     watch: {
       selectedOption: function(value) {
-        if (value && this.searchResults) {
-          const geo = this.searchResults.find(
-            (element) => element.id == value.id
-          );
-          this.$emit('latLonChange', geo);
+        if (value) {
+          this.$store.dispatch(LOCATION_SET_BY_ID, value.id);
         }
       },
     },

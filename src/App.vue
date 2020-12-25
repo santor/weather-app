@@ -6,133 +6,72 @@
     <header>
       <div class="flex flex-row justify-between h-10">
         <Location data-test="location" class="self-center" />
-        <Search @latLonChange="onLocationChange" />
+        <Search />
       </div>
     </header>
 
     <main class="flex flex-col justify-end min-h-full -mt-10">
-      <Current
-        data-test="current"
-        v-if="currentWeather.temperature != null"
-        :temperature="currentWeather.temperature"
-        :description="currentWeather.description"
-      />
-      <Daily :coordinates="coordinates" @fetchError="onErrorMessage" />
+      <Current data-test="current" />
+      <!-- <Daily @fetchError="onErrorMessage" /> -->
+      <Daily />
     </main>
   </div>
   <aside class="bg-white dark:bg-gray-800 flex-2 p-8 md:p-16 xl:p-32">
-    <Hourly :coordinates="coordinates" @fetchError="onErrorMessage" />
+    <!-- <Hourly @fetchError="onErrorMessage" /> -->
+    <!-- <Hourly /> -->
   </aside>
 </template>
 
 <script>
   import Location from '@/components/Location';
-  import Hourly from '@/components/Hourly';
   import Current from '@/components/Current';
+  // import Hourly from '@/components/Hourly';
   import Daily from '@/components/Daily';
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
-  import Api from '@/lib/api';
-  import LocalStorage from '@/lib/local_storage';
-  import { onMounted, reactive, computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import { onMounted, computed } from 'vue';
   import { useStore } from 'vuex';
-  import { getWeatherDescription } from './utils/utils.js';
+  import {
+    LOCATION_CLEAR_NAME,
+    LOCATION_UPDATE_COORDINATES,
+  } from '@/store/modules/location.js';
 
   export default {
     name: 'App',
 
     components: {
       Location,
-      Hourly,
-      Current,
+      // Hourly,
       Daily,
+      Current,
       ErrorAlert,
       Search,
     },
 
     setup() {
-      const { t } = useI18n(); // for translations
       const store = useStore();
       const hasError = computed(() => store.getters['error/hasError']);
-      const currentWeather = reactive({
-        iconCode: '',
-        temperature: null,
-        description: '',
-      });
-      const coordinates = reactive({
-        latitude: '',
-        longitude: '',
-      });
-
-      const onLocationChange = (locationData) => {
-        store.commit('location/setLocationName', locationData.name);
-        const lat = locationData.lat;
-        const lon = locationData.lon;
-        updateCoordinates(lat, lon);
-        getCurrentForecast(lat, lon, locationData.name);
-      };
-
-      function updateCoordinates(lat, lon) {
-        coordinates.latitude = lat;
-        coordinates.longitude = lon;
-      }
-
-      const onErrorMessage = function(error) {
-        store.commit('error/addError', error);
-      };
 
       onMounted(async () => {
-        //try to get the users location
-        getLocation();
-
-        //if not allowed, get the weather for the last known location
-        const permissionStatus = await navigator.permissions.query({
-          name: 'geolocation',
-        });
-        const noPermission = permissionStatus.state != 'granted';
-        if (noPermission) {
-          const lat = LocalStorage.getLatitude();
-          const lon = LocalStorage.getLongitude();
-          updateCoordinates(lat, lon);
-          getCurrentForecast(lat, lon);
-        }
+        //try to get the users coordinate
+        getPosition();
       });
 
-      function getCurrentForecast(lat, lon, location) {
-        Api.getCurrentForecast(lat, lon, location)
-          .then((weather) => {
-            currentWeather.temperature = parseInt(weather.temperature);
-            const description = getWeatherDescription(weather.iconCode);
-            currentWeather.description = t(description);
-          })
-          .catch((error) => {
-            onErrorMessage(t('couldNotFetchCurrent'));
-            console.log('[App.vue] ' + error);
-          });
-      }
-
-      function getLocation() {
+      function getPosition() {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(searchWeatherForPosition);
+          navigator.geolocation.getCurrentPosition(onUserPositionAvailable);
         }
       }
 
-      function searchWeatherForPosition(position) {
-        const coords = position.coords;
-        const lat = coords.latitude;
-        const lon = coords.longitude;
-        updateCoordinates(lat, lon);
-        getCurrentForecast(lat, lon);
+      function onUserPositionAvailable(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        store.commit(LOCATION_CLEAR_NAME);
+        store.commit(LOCATION_UPDATE_COORDINATES, { latitude, longitude });
       }
 
       return {
-        t,
-        currentWeather,
         hasError,
-        onErrorMessage,
-        onLocationChange,
-        coordinates,
       };
     },
   };

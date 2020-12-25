@@ -118,14 +118,13 @@ class Api {
    * @param {*} location name of the location
    */
   async getCurrentForecast(latitude, longitude, location) {
-    console.log(location);
     this._checkNotNull(latitude, longitude, 'getCurrentForecast()');
 
     LocalStorage.saveCurrentCoordinates(latitude, longitude);
 
-    // if (location) {
-    //   LocalStorage.saveCurrentLocation(location);
-    // }
+    if (location) {
+      LocalStorage.saveCurrentLocation(location);
+    }
 
     if (!this._isTokenValid()) {
       this.authToken = await this._fetchAndStoreAuthToken();
@@ -135,7 +134,7 @@ class Api {
     );
   }
 
-  async _fetchCurrentForecast(url) {
+  async _fetchCurrentForecast(url, locationKnown) {
     const json = await axios(url, {
       headers: {
         Authorization: 'Bearer ' + this.authToken,
@@ -143,9 +142,12 @@ class Api {
     }).then((result) => result.data);
 
     if (json) {
-      LocalStorage.saveCurrentLocation(json.info.name.de);
+      const location = json.info.name.de;
+      if (!locationKnown) {
+        LocalStorage.saveCurrentLocation(location);
+      }
       return {
-        location: json.info.name.de,
+        location: location,
         iconCode: json.current_hour[0].values[0].smb3,
         temperature: json.current_hour[0].values[1].ttt,
       };

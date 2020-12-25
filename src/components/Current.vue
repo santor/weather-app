@@ -25,33 +25,61 @@
 </template>
 
 <script>
-  import { toRefs, computed, reactive, onMounted, onUnmounted } from 'vue';
+  import { computed, reactive, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { zeroPad } from '../utils/utils.js';
+  import { useStore } from 'vuex';
+  import { zeroPad, getWeatherDescriptionCode } from '../utils/utils.js';
 
   export default {
     name: 'Current',
-    props: {
-      temperature: {
-        type: Number,
-        required: true,
-      },
-      description: {
-        type: String,
-        required: true,
-      },
-    },
-    setup(props) {
+    setup() {
       const { t } = useI18n();
-      const { temperature } = toRefs(props);
-      const roundedTemperature = computed(() => Math.round(temperature.value));
+      const store = useStore();
+      const coords = computed(() => store.state.location.coordinates);
+      const roundedTemperature = computed(() =>
+        Math.round(store.state.current.weather.temperature)
+      );
+      const description = computed(() => {
+        const icon = store.state.current.weather.iconCode;
+        if (icon) {
+          const description = getWeatherDescriptionCode(icon);
+          return t(description);
+        }
+        return '';
+      });
       const date = reactive({
         time: '',
         day: '',
       });
 
+      store.watch(
+        () => store.state.location.coordinates,
+        (coordinates) => {
+          getCurrentForecast(coordinates.latitude, coordinates.longitude);
+        }
+      );
+
+      function getCurrentForecast(lat, lon) {
+        store
+          .dispatch('current/fetchCurrentWeather', {
+            latitude: lat,
+            longitude: lon,
+          })
+          .catch((error) => {
+            store.commit('error/addError', t('couldNotFetchCurrent'));
+            console.log('[Current.vue] ' + error);
+          });
+      }
+
       let intervalId, timeoutId;
+
       onMounted(() => {
+        getCurrentForecast(coords.value.latitude, coords.value.longitude);
+
+        setupTime();
+      });
+
+      function setupTime() {
         //set initial time
         const currentTime = updateTime();
         const initialTimeout = (60 - currentTime.getSeconds()) * 1000;
@@ -64,7 +92,7 @@
             updateTime();
           }, 60 * 1000);
         }, initialTimeout);
-      });
+      }
 
       onUnmounted(() => {
         if (timeoutId) {
@@ -79,6 +107,7 @@
         const currentTime = new Date();
         const hours = currentTime.getHours();
         const minutes = currentTime.getMinutes();
+
         //ex. 14:02 instead of 14:2
         date.time = `${zeroPad(hours)}:${zeroPad(minutes)}`;
 
@@ -92,6 +121,7 @@
 
       return {
         roundedTemperature,
+        description,
         date,
       };
     },
