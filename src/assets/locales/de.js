@@ -1,10 +1,9 @@
 export default {
-  couldNotFetchCurrent:
-    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+  couldNotFetchCurrent: 'Die aktuelle Prognose konnte nicht abgerufen werden.',
   couldNotFetchDaily:
-    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+    'Die wöchentliche Vorhersage konnte nicht abgerufen werden.',
   couldNotFetchHourly:
-    'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.',
+    'Die stündliche Vorhersage konnte nicht abgerufen werden.',
   error: 'Fehler',
   searchLocation: 'Ort suchen',
   day_1: 'Montag',

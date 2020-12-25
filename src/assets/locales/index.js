@@ -2,9 +2,9 @@ import { createI18n } from 'vue-i18n';
 import de from './de';
 const messages = {
   en: {
-    couldNotFetchCurrent: 'The service might be temporarily unavailable.',
-    couldNotFetchDaily: 'The service might be temporarily unavailable.',
-    couldNotFetchHourly: 'The service might be temporarily unavailable.',
+    couldNotFetchCurrent: 'Could not fetch the current forecast.',
+    couldNotFetchDaily: 'Could not fetch the weekly forecast.',
+    couldNotFetchHourly: 'Could not fetch the hourly forecast.',
     error: 'Error',
     searchLocation: 'Search location',
     day_1: 'Monday',
