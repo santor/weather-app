@@ -11,7 +11,7 @@
 
     setup() {
       const store = useStore();
-      const locationName = computed(() => store.state.location.locationName);
+      const locationName = computed(() => store.state.location.name);
 
       return {
         locationName,
