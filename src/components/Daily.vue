@@ -28,56 +28,43 @@
 
 <script>
   import { useI18n } from 'vue-i18n';
-  import { toRefs, watchEffect, ref } from 'vue';
+  import { useStore } from 'vuex';
+  import { onMounted, computed, watch } from 'vue';
   import { getWeatherIconName } from '../utils/utils.js';
-  import Api from '@/lib/api';
 
   export default {
     name: 'Daily',
-    props: {
-      coordinates: {
-        latitude: {
-          type: Number,
-          default: 0,
-        },
-        longitude: {
-          type: Number,
-          default: 0,
-        },
-      },
-    },
 
-    emits: ['fetchError'],
-
-    setup(props, context) {
+    setup() {
       const { t } = useI18n();
-      const coord = toRefs(props.coordinates);
-      const days = ref([]);
+      const store = useStore();
+      const coords = computed(() => store.state.location.coordinates);
+      const days = computed(() => store.state.daily.days);
 
-      watchEffect(() => {
-        const lat = coord.latitude.value;
-        const lon = coord.longitude.value;
-        if (lat != 0 && lon != 0) {
-          getSevenDayForecast(lat, lon);
-        }
+      watch(coords, (valueNow) => {
+        getSevenDayForecast(valueNow.latitude, valueNow.longitude);
+      });
+
+      onMounted(() => {
+        getSevenDayForecast(coords.value.latitude, coords.value.longitude);
       });
 
       async function getSevenDayForecast(lat, lon) {
-        return Api.get7daysForecast(lat, lon)
-          .then((weather) => {
-            days.value = weather;
-          })
-          .catch((error) => {
-            context.emit('fetchError', t('couldNotFetchDaily'));
-            console.log('[Daily.vue] ' + error);
+        try {
+          store.dispatch('daily/fetchSevenDaysForecast', {
+            latitude: lat,
+            longitude: lon,
           });
+        } catch (error) {
+          store.commit('error/addError', t('couldNotFetchDaily'));
+          console.log('[Daily.vue] ' + error);
+        }
       }
 
       return {
         t,
         days,
         getWeatherIconName,
-        getSevenDayForecast,
       };
     },
   };
