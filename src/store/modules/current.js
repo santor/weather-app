@@ -1,8 +1,5 @@
 import Api from '@/lib/api';
-
-//something like an enum
-const State = { LOADING: 0, FAILURE: -1, SUCCESS: 1 };
-Object.freeze(State);
+import { State } from '@/utils/utils.js';
 
 export default {
   namespaced: true,

@@ -15,4 +15,7 @@ function zeroPad(num) {
   return String(num).padStart(2, '0');
 }
 
-export { getWeatherIconName, getWeatherDescriptionCode, zeroPad };
+const State = { LOADING: 0, FAILURE: -1, SUCCESS: 1 };
+Object.freeze(State);
+
+export { getWeatherIconName, getWeatherDescriptionCode, zeroPad, State };
