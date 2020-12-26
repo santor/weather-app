@@ -1,5 +1,5 @@
 import Api from '@/lib/api';
-import { State } from '@/utils/utils.js';
+import { State } from '@/utils/utils';
 
 export default {
   namespaced: true,

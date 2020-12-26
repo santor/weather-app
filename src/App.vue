@@ -3,6 +3,7 @@
     <transition name="fade">
       <ErrorAlert data-test="error-alert" v-if="hasError" />
     </transition>
+
     <header>
       <div class="flex flex-row justify-between h-10">
         <Location data-test="location" class="self-center" />
@@ -12,20 +13,18 @@
 
     <main class="flex flex-col justify-end min-h-full -mt-10">
       <Current data-test="current" />
-      <!-- <Daily @fetchError="onErrorMessage" /> -->
       <Daily />
     </main>
   </div>
   <aside class="bg-white dark:bg-gray-800 flex-2 p-8 md:p-16 xl:p-32">
-    <!-- <Hourly @fetchError="onErrorMessage" /> -->
-    <!-- <Hourly /> -->
+    <Hourly />
   </aside>
 </template>
 
 <script>
   import Location from '@/components/Location';
   import Current from '@/components/Current';
-  // import Hourly from '@/components/Hourly';
+  import Hourly from '@/components/Hourly';
   import Daily from '@/components/Daily';
   import ErrorAlert from '@/components/ErrorAlert';
   import Search from '@/components/Search';
@@ -41,7 +40,7 @@
 
     components: {
       Location,
-      // Hourly,
+      Hourly,
       Daily,
       Current,
       ErrorAlert,

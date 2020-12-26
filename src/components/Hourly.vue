@@ -40,54 +40,30 @@
 
 <script>
   import { useI18n } from 'vue-i18n';
-  import { toRefs, watchEffect, ref } from 'vue';
-  import { getWeatherIconName, zeroPad } from '../utils/utils.js';
-  import Api from '@/lib/api';
+  import { computed } from 'vue';
+  import { useStore } from 'vuex';
+  import onCoordinatesChange from '@/composables/coords_change';
 
   export default {
     name: 'Hourly',
-    props: {
-      coordinates: {
-        latitude: {
-          type: Number,
-          default: 0,
-        },
-        longitude: {
-          type: Number,
-          default: 0,
-        },
-      },
-    },
-    emits: ['fetchError'],
 
-    setup(props, context) {
+    setup() {
       const { t } = useI18n();
-      const coord = toRefs(props.coordinates);
-      const allDay = ref([]);
+      const store = useStore();
+      const allDay = computed(() => store.state.oneDay.hourly);
 
-      watchEffect(() => {
-        const lat = coord.latitude.value;
-        const lon = coord.longitude.value;
-        if (lat != 0 && lon != 0) {
-          getHoursForecast(lat, lon);
-        }
-      });
+      onCoordinatesChange(getHoursForecast);
 
-      async function getHoursForecast(lat, lon) {
-        return Api.get24HoursForecast(lat, lon)
-          .then((forecast) => {
-            forecast.forEach((item) => {
-              const convertedIcon = getWeatherIconName(item.icon);
-              item.icon = convertedIcon ? convertedIcon : item.icon;
-              item.hours = `${zeroPad(item.hours)}:00`;
-              item.time = parseInt(item.hours) % 12;
-            });
-            allDay.value = forecast;
-          })
-          .catch((error) => {
-            context.emit('fetchError', t('couldNotFetchDaily'));
-            console.log('[Hourly.vue] ' + error);
+      function getHoursForecast(lat, lon) {
+        try {
+          store.dispatch('oneDay/fetchHourlyForecast', {
+            latitude: lat,
+            longitude: lon,
           });
+        } catch (error) {
+          store.commit('error/addError', t('couldNotFetchHourly'));
+          console.log('[Hourly.vue] ' + error);
+        }
       }
 
       return {
