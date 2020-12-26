@@ -12,7 +12,7 @@ describe('App.vue', () => {
   });
   describe('Errors', () => {
     test('displays error alert', async () => {
-      wrapper.vm.onErrorMessage('Test error');
+      store.commit('error/addError', 'Test error');
       //wait until the vue virtual dom updates
       await wrapper.vm.$nextTick();
       const error = wrapper.find('[data-test="error-alert"]');
@@ -29,7 +29,7 @@ describe('App.vue', () => {
     });
   });
 
-  describe('onLocationChange and current weather', () => {
+  describe('on location change', () => {
     const locationData = {
       name: 'Bäern',
       lat: 23,
@@ -45,7 +45,11 @@ describe('App.vue', () => {
     );
 
     beforeAll(() => {
-      wrapper.vm.onLocationChange(locationData);
+      store.commit('location/updateLocationName', locationData.name);
+      store.commit('location/updateCoordinates', {
+        latitude: locationData.lat,
+        longitude: locationData.lon,
+      });
     });
 
     test('updates location', () => {
@@ -54,13 +58,13 @@ describe('App.vue', () => {
     });
 
     test('updates coordinates', () => {
-      const coord = wrapper.vm.coordinates;
+      const coord = store.state.location.coordinates;
       expect(coord.latitude).toBe(23);
       expect(coord.longitude).toBe(2);
     });
 
     test('calls getCurrentForecast with correct arguments', () => {
-      expect(Api.getCurrentForecast).toHaveBeenCalledWith(23, 2, 'Bäern');
+      expect(Api.getCurrentForecast).toHaveBeenCalledWith(23, 2);
     });
 
     test('has current temperature', () => {

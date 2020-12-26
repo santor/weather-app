@@ -1,6 +1,7 @@
 import Current from '@/components/Current';
 import { shallowMount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
+import store from '@/store/index.js';
 
 //Mock the whole Date class with a fixed date instance
 let realDate;
@@ -11,7 +12,6 @@ global.Date = class extends Date {
     if (date) {
       return super(date);
     }
-
     return currentDate;
   }
 };
@@ -19,12 +19,16 @@ global.Date = class extends Date {
 describe('Current.vue', () => {
   const wrapper = shallowMount(Current, {
     global: {
-      plugins: [i18n],
+      plugins: [i18n, store],
     },
-    props: {
+  });
+
+  beforeAll(() => {
+    store.commit('current/updateWeather', {
+      location: 'göli',
       temperature: 0.6,
-      description: 'clear',
-    },
+      iconCode: '1',
+    });
   });
 
   test('has rounded temperature', () => {
@@ -34,7 +38,7 @@ describe('Current.vue', () => {
 
   test('has description', () => {
     const description = wrapper.find('[data-test="description"]');
-    expect(description.text()).toBe('clear');
+    expect(description.text()).toBe('klar');
   });
 
   test('displays correct hour and minute', () => {
