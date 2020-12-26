@@ -29,7 +29,8 @@
 <script>
   import { useI18n } from 'vue-i18n';
   import { useStore } from 'vuex';
-  import { onMounted, computed, watch } from 'vue';
+  import { computed } from 'vue';
+  import onCoordinatesChange from '@/composables/coords_change.js';
   import { getWeatherIconName } from '../utils/utils.js';
 
   export default {
@@ -38,16 +39,9 @@
     setup() {
       const { t } = useI18n();
       const store = useStore();
-      const coords = computed(() => store.state.location.coordinates);
       const days = computed(() => store.state.daily.days);
 
-      watch(coords, (valueNow) => {
-        getSevenDayForecast(valueNow.latitude, valueNow.longitude);
-      });
-
-      onMounted(() => {
-        getSevenDayForecast(coords.value.latitude, coords.value.longitude);
-      });
+      onCoordinatesChange(getSevenDayForecast);
 
       async function getSevenDayForecast(lat, lon) {
         try {

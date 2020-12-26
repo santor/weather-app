@@ -28,14 +28,14 @@
   import { computed, reactive, onMounted, onUnmounted } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useStore } from 'vuex';
-  import { zeroPad, getWeatherDescriptionCode } from '../utils/utils.js';
+  import { zeroPad, getWeatherDescriptionCode } from '@/utils/utils.js';
+  import onCoordinatesChange from '@/composables/coords_change';
 
   export default {
     name: 'Current',
     setup() {
       const { t } = useI18n();
       const store = useStore();
-      const coords = computed(() => store.state.location.coordinates);
       const roundedTemperature = computed(() =>
         Math.round(store.state.current.weather.temperature)
       );
@@ -52,12 +52,7 @@
         day: '',
       });
 
-      store.watch(
-        () => store.state.location.coordinates,
-        (coordinates) => {
-          getCurrentForecast(coordinates.latitude, coordinates.longitude);
-        }
-      );
+      onCoordinatesChange(getCurrentForecast);
 
       function getCurrentForecast(lat, lon) {
         store
@@ -74,8 +69,6 @@
       let intervalId, timeoutId;
 
       onMounted(() => {
-        getCurrentForecast(coords.value.latitude, coords.value.longitude);
-
         setupTime();
       });
 
