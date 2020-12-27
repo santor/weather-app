@@ -19,9 +19,9 @@ export default {
   },
 
   actions: {
-    fetchSevenDaysForecast({ commit }, coordinates) {
+    async fetchSevenDaysForecast({ commit }, coordinates) {
       commit('updateState', State.LOADING);
-      Api.get7daysForecast(coordinates.latitude, coordinates.longitude)
+      await Api.get7daysForecast(coordinates.latitude, coordinates.longitude)
         .then((weather) => {
           commit('updateState', State.SUCCESS);
           commit('updateDays', weather);

@@ -1,18 +1,14 @@
 import Daily from '@/components/Daily';
 import { shallowMount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
+import store from '@/store';
 import Api from '@/lib/api';
+import { useI18n } from 'vue-i18n';
 
 describe('Daily.vue', () => {
   const wrapper = shallowMount(Daily, {
     global: {
-      plugins: [i18n],
-    },
-    props: {
-      coordinates: {
-        latitude: 46.933433532714844,
-        longitude: 7.499686241149902,
-      },
+      plugins: [i18n, store],
     },
   });
 
@@ -34,13 +30,16 @@ describe('Daily.vue', () => {
   });
 
   beforeEach(async () => {
-    await wrapper.vm.getSevenDayForecast();
+    await wrapper.vm.getSevenDaysForecast();
   });
 
-  test('emits fetchError', () => {
-    expect(wrapper.emitted('fetchError')).toBeTruthy();
-    expect(wrapper.emitted('fetchError')[0][0]).toEqual(
-      'Der Dienst ist möglicherweise vorübergehend nicht verfügbar.'
+  test('commits correct error message', () => {
+    const hasError = store.getters['error/hasError'];
+    expect(hasError).toBeTruthy();
+
+    const errorMessage = store.state.error.errorMessage;
+    expect(errorMessage).toEqual(
+      'Die wöchentliche Vorhersage konnte nicht abgerufen werden.'
     );
   });
 

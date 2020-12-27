@@ -41,11 +41,11 @@
       const store = useStore();
       const days = computed(() => store.state.daily.days);
 
-      onCoordinatesChange(getSevenDayForecast);
+      onCoordinatesChange(getSevenDaysForecast);
 
-      async function getSevenDayForecast(lat, lon) {
+      async function getSevenDaysForecast(lat, lon) {
         try {
-          store.dispatch('daily/fetchSevenDaysForecast', {
+          await store.dispatch('daily/fetchSevenDaysForecast', {
             latitude: lat,
             longitude: lon,
           });
@@ -59,6 +59,7 @@
         t,
         days,
         getWeatherIconName,
+        getSevenDaysForecast, // make visible for testing
       };
     },
   };

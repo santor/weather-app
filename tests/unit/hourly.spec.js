@@ -9,13 +9,6 @@ describe('Hourly.vue', () => {
     global: {
       plugins: [i18n, store], //need this so that the component can be mounted
     },
-    props: {
-      coordinates: {
-        // Muri bei Bern
-        latitude: 46.933433532714844,
-        longitude: 7.499686241149902,
-      },
-    },
   });
 
   beforeAll(() => {
@@ -40,11 +33,10 @@ describe('Hourly.vue', () => {
     await wrapper.vm.getHoursForecast();
   });
 
-  test('commits error to store', async () => {
+  test('commits error on fetchError', async () => {
     // await wrapper.vm.$nextTick();
     const hasError = store.getters['error/hasError'];
     expect(hasError).toBe(true);
-    // expect(wrapper.emitted('fetchError')).toBeTruthy();
   });
 
   test('displays all', () => {
