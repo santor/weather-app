@@ -1,12 +1,13 @@
 import Search from '@/components/Search';
 import { mount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
+import store from '@/store';
 import Api from '@/lib/api';
 
 describe('Search.vue', () => {
   const wrapper = mount(Search, {
     global: {
-      plugins: [i18n], //need this so that the component can be mounted
+      plugins: [i18n, store], //need this so that the component can be mounted
     },
   });
 
@@ -40,9 +41,9 @@ describe('Search.vue', () => {
     ]);
   });
 
-  test('has empty message when searchTerm shorter than 2 letters', () => {
-    const search = wrapper.vm.searchFunction('m');
-    expect(search.message).toBeFalsy();
+  test('has empty message when searchTerm shorter than 2 letters', async () => {
+    const search = await wrapper.vm.searchFunction('m');
+    expect(search.message).toEqual('');
   });
 
   describe('returns correct array', () => {
@@ -51,16 +52,11 @@ describe('Search.vue', () => {
       search = await wrapper.vm.searchFunction('muri');
     });
 
-    test('has updated searchResults', () => {
-      const searchResults = wrapper.vm.searchResults;
-      expect(searchResults).toHaveLength(4);
-    });
-
     test('searchFunction has correct array length', () => {
       expect(search.result).toHaveLength(4);
     });
 
-    test('emits object on selection change', async () => {
+    test('commits location object on selection change', () => {
       const value = {
         id: 1452,
         name: 'Muri (AG)',
@@ -68,7 +64,14 @@ describe('Search.vue', () => {
         lon: 8.338957786560059,
       };
       wrapper.vm.$options.watch.selectedOption.call(wrapper.vm, value);
-      expect(wrapper.emitted('latLonChange')[0][0]).toEqual(value);
+      const locationName = store.state.location.name;
+      const coords = store.state.location.coordinates;
+      const latitude = coords.latitude;
+      const longitude = coords.longitude;
+
+      expect(locationName).toEqual(value.name);
+      expect(latitude).toEqual(value.lat);
+      expect(longitude).toEqual(value.lon);
     });
   });
 });

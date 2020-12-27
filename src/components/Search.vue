@@ -37,7 +37,7 @@
     },
 
     methods: {
-      searchFunction(searchTerm) {
+      async searchFunction(searchTerm) {
         return new Promise((resolve) => {
           if (this.searchTimeoutId) {
             clearTimeout(this.searchTimeoutId);
