@@ -1,6 +1,6 @@
 import {
   zeroPad,
-  getWeatherDescription,
+  getWeatherDescriptionCode,
   getWeatherIconName,
 } from '../../src/utils/utils';
 
@@ -23,9 +23,9 @@ describe('utils.js getWeatherIconName()', () => {
   });
 });
 
-describe('utils.js getWeatherDescription()', () => {
+describe('utils.js getWeatherDescriptionCode()', () => {
   test('converts srf icon code to description usable with i18n', () => {
-    const result = getWeatherDescription('26');
+    const result = getWeatherDescriptionCode('26');
     expect(result).toEqual('rain_shower_thunderstorm');
   });
 });
