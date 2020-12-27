@@ -32,7 +32,7 @@ export default {
           commit('updateHours', hourly);
         })
         .catch((error) => {
-          commit('updateSate', State.FAILURE);
+          commit('updateState', State.FAILURE);
           throw Error(error);
         });
     },

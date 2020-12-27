@@ -3,7 +3,6 @@ import { shallowMount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
 import store from '@/store';
 import Api from '@/lib/api';
-import { useI18n } from 'vue-i18n';
 
 describe('Daily.vue', () => {
   const wrapper = shallowMount(Daily, {

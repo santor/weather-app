@@ -2,7 +2,7 @@ import weatherCodeMap from './weather_code_map.json';
 
 function getWeatherIconName(iconCode) {
   const item = weatherCodeMap.find((element) => element.code == iconCode);
-  return item.code_icon;
+  return item?.code_icon;
 }
 
 function getWeatherDescriptionCode(iconCode) {
