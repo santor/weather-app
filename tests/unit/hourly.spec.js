@@ -1,12 +1,13 @@
 import Hourly from '@/components/Hourly';
 import { shallowMount } from '@vue/test-utils';
 import i18n from '@/assets/locales';
+import store from '@/store/index.js';
 import Api from '@/lib/api';
 
 describe('Hourly.vue', () => {
   const wrapper = shallowMount(Hourly, {
     global: {
-      plugins: [i18n], //need this so that the component can be mounted
+      plugins: [i18n, store], //need this so that the component can be mounted
     },
     props: {
       coordinates: {
@@ -39,8 +40,11 @@ describe('Hourly.vue', () => {
     await wrapper.vm.getHoursForecast();
   });
 
-  test('emits fetchError', () => {
-    expect(wrapper.emitted('fetchError')).toBeTruthy();
+  test('commits error to store', async () => {
+    // await wrapper.vm.$nextTick();
+    const hasError = store.getters['error/hasError'];
+    expect(hasError).toBe(true);
+    // expect(wrapper.emitted('fetchError')).toBeTruthy();
   });
 
   test('displays all', () => {

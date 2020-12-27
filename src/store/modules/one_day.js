@@ -13,14 +13,14 @@ export default {
       state.hourly = hours;
     },
     updateState(state, loadState) {
-      state.loadigState = loadState;
+      state.loadingState = loadState;
     },
   },
 
   actions: {
-    fetchHourlyForecast({ commit }, coordinates) {
+    async fetchHourlyForecast({ commit }, coordinates) {
       commit('updateState', State.LOADING);
-      Api.get24HoursForecast(coordinates.latitude, coordinates.longitude)
+      await Api.get24HoursForecast(coordinates.latitude, coordinates.longitude)
         .then((hourly) => {
           hourly.forEach((item) => {
             const icon = getWeatherIconName(item.icon);

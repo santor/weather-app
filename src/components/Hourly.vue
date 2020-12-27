@@ -54,9 +54,10 @@
 
       onCoordinatesChange(getHoursForecast);
 
-      function getHoursForecast(lat, lon) {
+      async function getHoursForecast(lat, lon) {
         try {
-          store.dispatch('oneDay/fetchHourlyForecast', {
+          //await for testability
+          await store.dispatch('oneDay/fetchHourlyForecast', {
             latitude: lat,
             longitude: lon,
           });
